@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Google Maps Navigation Database — ER diagram (hand-authored SVG).
+     Owner: Ayush Kumar (Group Lead) — CP1 deliverable.
+     Cardinality: "1" near the parent end, "N" near the child end.
+     PK = primary key, FK = foreign key, UK = unique/candidate key.
+     Mermaid source: er_diagram.mmd -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1120" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .entity { fill:#f7f7fb; stroke:#334155; stroke-width:1.5; }
+    .head   { fill:#1e293b; }
+    .hname  { fill:#ffffff; font-weight:bold; font-size:14px; }
+    .attr   { font-size:11.5px; fill:#1f2937; }
+    .pk     { fill:#b91c1c; font-weight:bold; }
+    .fk     { fill:#1d4ed8; }
+    .uk     { fill:#15803d; }
+    .rel    { stroke-width:1.6; fill:none; }
+    .rlabel { font-size:10px; fill:#374151; font-style:italic; }
+    .card   { font-size:11px; font-weight:bold; fill:#111827; }
+  </style>
+
+  <rect width="1700" height="1120" fill="#ffffff"/>
+
+  <!-- ===================== RELATIONSHIPS (drawn first, under boxes) ===================== -->
+  <!-- 1 CITIES -> PLACES -->
+  <line class="rel" x1="155" y1="138" x2="155" y2="320" stroke="#e6194B"/>
+  <text class="card" x="160" y="155">1</text><text class="card" x="160" y="314">N</text>
+  <text class="rlabel" x="162" y="232">city</text>
+  <!-- 2 PLACE_CATEGORIES -> PLACES -->
+  <line class="rel" x1="590" y1="73" x2="270" y2="409" stroke="#3cb44b"/>
+  <text class="card" x="578" y="76">1</text><text class="card" x="274" y="402">N</text>
+  <text class="rlabel" x="430" y="248">category</text>
+  <!-- 3 CITIES -> USERS (home_city) routed along top -->
+  <path class="rel" d="M155 40 L155 22 L1255 22 L1255 40" stroke="#4363d8"/>
+  <text class="card" x="146" y="38">1</text><text class="card" x="1248" y="38">N</text>
+  <text class="rlabel" x="690" y="16">home_city</text>
+  <!-- 4 CITIES -> ROAD_SEGMENTS -->
+  <line class="rel" x1="270" y1="89" x2="1140" y2="377" stroke="#f58231"/>
+  <text class="card" x="276" y="86">1</text><text class="card" x="1112" y="378">N</text>
+  <text class="rlabel" x="690" y="240">city</text>
+  <!-- 5 PLACES -> OPENING_HOURS -->
+  <line class="rel" x1="270" y1="409" x2="590" y2="369" stroke="#911eb4"/>
+  <text class="card" x="276" y="406">1</text><text class="card" x="580" y="366">N</text>
+  <text class="rlabel" x="392" y="396">hours</text>
+  <!-- 6 PLACES -> PLACE_REVIEWS -->
+  <line class="rel" x1="155" y1="498" x2="155" y2="600" stroke="#42d4f4"/>
+  <text class="card" x="160" y="514">1</text><text class="card" x="160" y="596">N</text>
+  <text class="rlabel" x="160" y="556">reviewed_in</text>
+  <!-- 7 PLACES -> SAVED_PLACES -->
+  <line class="rel" x1="270" y1="409" x2="590" y2="649" stroke="#f032e6"/>
+  <text class="card" x="278" y="408">1</text><text class="card" x="580" y="648">N</text>
+  <text class="rlabel" x="430" y="535">saved_as</text>
+  <!-- 8 PLACES -> NAVIGATION_SESSIONS (origin & dest) routed down left -->
+  <path class="rel" d="M40 409 L20 409 L20 961 L40 961" stroke="#000075"/>
+  <text class="card" x="30" y="404">1</text><text class="card" x="30" y="958">N</text>
+  <text class="rlabel" x="6" y="690" transform="rotate(-90 6 690)">origin / dest</text>
+  <!-- 9 USERS -> PLACE_REVIEWS -->
+  <line class="rel" x1="1140" y1="105" x2="270" y2="657" stroke="#9A6324"/>
+  <text class="card" x="1128" y="104">1</text><text class="card" x="276" y="656">N</text>
+  <text class="rlabel" x="700" y="384">writes</text>
+  <!-- 10 USERS -> SAVED_PLACES -->
+  <line class="rel" x1="1140" y1="105" x2="820" y2="649" stroke="#808000"/>
+  <text class="card" x="1130" y="112">1</text><text class="card" x="806" y="648">N</text>
+  <text class="rlabel" x="984" y="380">saves</text>
+  <!-- 11 USERS -> NAVIGATION_SESSIONS -->
+  <line class="rel" x1="1140" y1="105" x2="270" y2="961" stroke="#469990"/>
+  <text class="card" x="1130" y="118">1</text><text class="card" x="278" y="960">N</text>
+  <text class="rlabel" x="700" y="540">starts</text>
+  <!-- 12 USERS -> INCIDENT_REPORTS -->
+  <line class="rel" x1="1140" y1="105" x2="820" y2="945" stroke="#800000"/>
+  <text class="card" x="1122" y="126">1</text><text class="card" x="806" y="944">N</text>
+  <text class="rlabel" x="984" y="528">reports</text>
+  <!-- 13 ROAD_SEGMENTS -> TRAFFIC_READINGS -->
+  <line class="rel" x1="1255" y1="434" x2="1255" y2="600" stroke="#1f93c4"/>
+  <text class="card" x="1262" y="450">1</text><text class="card" x="1262" y="596">N</text>
+  <text class="rlabel" x="1262" y="522">readings</text>
+  <!-- 14 ROAD_SEGMENTS -> INCIDENT_REPORTS -->
+  <line class="rel" x1="1140" y1="377" x2="820" y2="945" stroke="#6f4e7c"/>
+  <text class="card" x="1130" y="384">1</text><text class="card" x="806" y="942">N</text>
+  <text class="rlabel" x="982" y="664">has</text>
+
+  <!-- ===================== ENTITY BOXES ===================== -->
+  <!-- CITIES -->
+  <g><rect class="entity" x="40" y="40" width="230" height="98"/><rect class="head" x="40" y="40" width="230" height="24"/>
+  <text class="hname" x="50" y="57">CITIES</text>
+  <text class="attr" x="50" y="80"><tspan class="pk">PK</tspan> city_id</text>
+  <text class="attr" x="50" y="96"><tspan class="uk">UK</tspan> city_name</text>
+  <text class="attr" x="50" y="112">center_lat</text>
+  <text class="attr" x="50" y="128">center_lng</text></g>
+
+  <!-- PLACE_CATEGORIES -->
+  <g><rect class="entity" x="590" y="40" width="230" height="66"/><rect class="head" x="590" y="40" width="230" height="24"/>
+  <text class="hname" x="600" y="57">PLACE_CATEGORIES</text>
+  <text class="attr" x="600" y="80"><tspan class="pk">PK</tspan> category_id</text>
+  <text class="attr" x="600" y="96"><tspan class="uk">UK</tspan> category_name</text></g>
+
+  <!-- USERS -->
+  <g><rect class="entity" x="1140" y="40" width="230" height="130"/><rect class="head" x="1140" y="40" width="230" height="24"/>
+  <text class="hname" x="1150" y="57">USERS</text>
+  <text class="attr" x="1150" y="80"><tspan class="pk">PK</tspan> user_id</text>
+  <text class="attr" x="1150" y="96"><tspan class="uk">UK</tspan> email</text>
+  <text class="attr" x="1150" y="112"><tspan class="fk">FK</tspan> home_city_id</text>
+  <text class="attr" x="1150" y="128">is_local_guide</text>
+  <text class="attr" x="1150" y="144">guide_level</text>
+  <text class="attr" x="1150" y="160">created_at</text></g>
+
+  <!-- PLACES -->
+  <g><rect class="entity" x="40" y="320" width="230" height="178"/><rect class="head" x="40" y="320" width="230" height="24"/>
+  <text class="hname" x="50" y="337">PLACES</text>
+  <text class="attr" x="50" y="360"><tspan class="pk">PK</tspan> place_id</text>
+  <text class="attr" x="50" y="376"><tspan class="uk">UK</tspan> plus_code</text>
+  <text class="attr" x="50" y="392"><tspan class="fk">FK</tspan> category_id</text>
+  <text class="attr" x="50" y="408"><tspan class="fk">FK</tspan> city_id</text>
+  <text class="attr" x="50" y="424">latitude / longitude</text>
+  <text class="attr" x="50" y="440"><tspan class="uk">UK</tspan> phone (null)</text>
+  <text class="attr" x="50" y="456">avg_rating (null)</text>
+  <text class="attr" x="50" y="472">review_count</text>
+  <text class="attr" x="50" y="488">is_permanently_closed</text></g>
+
+  <!-- OPENING_HOURS -->
+  <g><rect class="entity" x="590" y="320" width="230" height="98"/><rect class="head" x="590" y="320" width="230" height="24"/>
+  <text class="hname" x="600" y="337">OPENING_HOURS</text>
+  <text class="attr" x="600" y="360"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> place_id</text>
+  <text class="attr" x="600" y="376"><tspan class="pk">PK</tspan> weekday</text>
+  <text class="attr" x="600" y="392">opens</text>
+  <text class="attr" x="600" y="408">closes (may &lt; opens)</text></g>
+
+  <!-- ROAD_SEGMENTS -->
+  <g><rect class="entity" x="1140" y="320" width="230" height="114"/><rect class="head" x="1140" y="320" width="230" height="24"/>
+  <text class="hname" x="1150" y="337">ROAD_SEGMENTS</text>
+  <text class="attr" x="1150" y="360"><tspan class="pk">PK</tspan> segment_id</text>
+  <text class="attr" x="1150" y="376"><tspan class="fk">FK</tspan> city_id</text>
+  <text class="attr" x="1150" y="392">road_type</text>
+  <text class="attr" x="1150" y="408">length_m</text>
+  <text class="attr" x="1150" y="424">speed_limit_kmph</text></g>
+
+  <!-- PLACE_REVIEWS -->
+  <g><rect class="entity" x="40" y="600" width="230" height="114"/><rect class="head" x="40" y="600" width="230" height="24"/>
+  <text class="hname" x="50" y="617">PLACE_REVIEWS</text>
+  <text class="attr" x="50" y="640"><tspan class="pk">PK</tspan> review_id</text>
+  <text class="attr" x="50" y="656"><tspan class="fk">FK</tspan> place_id</text>
+  <text class="attr" x="50" y="672"><tspan class="fk">FK</tspan> user_id</text>
+  <text class="attr" x="50" y="688"><tspan class="uk">UK</tspan> (place_id,user_id)</text>
+  <text class="attr" x="50" y="704">rating, created_at</text></g>
+
+  <!-- SAVED_PLACES -->
+  <g><rect class="entity" x="590" y="600" width="230" height="98"/><rect class="head" x="590" y="600" width="230" height="24"/>
+  <text class="hname" x="600" y="617">SAVED_PLACES</text>
+  <text class="attr" x="600" y="640"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> user_id</text>
+  <text class="attr" x="600" y="656"><tspan class="pk">PK</tspan><tspan class="fk">FK</tspan> place_id</text>
+  <text class="attr" x="600" y="672"><tspan class="pk">PK</tspan> list_name</text>
+  <text class="attr" x="600" y="688">saved_at</text></g>
+
+  <!-- TRAFFIC_READINGS -->
+  <g><rect class="entity" x="1140" y="600" width="230" height="114"/><rect class="head" x="1140" y="600" width="230" height="24"/>
+  <text class="hname" x="1150" y="617">TRAFFIC_READINGS</text>
+  <text class="attr" x="1150" y="640"><tspan class="pk">PK</tspan> reading_id</text>
+  <text class="attr" x="1150" y="656"><tspan class="fk">FK</tspan> segment_id</text>
+  <text class="attr" x="1150" y="672">recorded_at</text>
+  <text class="attr" x="1150" y="688">avg_speed_kmph</text>
+  <text class="attr" x="1150" y="704">congestion_level</text></g>
+
+  <!-- NAVIGATION_SESSIONS -->
+  <g><rect class="entity" x="40" y="880" width="230" height="162"/><rect class="head" x="40" y="880" width="230" height="24"/>
+  <text class="hname" x="50" y="897">NAVIGATION_SESSIONS</text>
+  <text class="attr" x="50" y="920"><tspan class="pk">PK</tspan> session_id</text>
+  <text class="attr" x="50" y="936"><tspan class="fk">FK</tspan> user_id (null)</text>
+  <text class="attr" x="50" y="952"><tspan class="fk">FK</tspan> origin_place_id (null)</text>
+  <text class="attr" x="50" y="968"><tspan class="fk">FK</tspan> dest_place_id</text>
+  <text class="attr" x="50" y="984">travel_mode, status</text>
+  <text class="attr" x="50" y="1000">distance_km, eta_minutes</text>
+  <text class="attr" x="50" y="1016">actual_minutes (null)</text>
+  <text class="attr" x="50" y="1032">rerouted_count</text></g>
+
+  <!-- INCIDENT_REPORTS -->
+  <g><rect class="entity" x="590" y="880" width="230" height="130"/><rect class="head" x="590" y="880" width="230" height="24"/>
+  <text class="hname" x="600" y="897">INCIDENT_REPORTS</text>
+  <text class="attr" x="600" y="920"><tspan class="pk">PK</tspan> report_id</text>
+  <text class="attr" x="600" y="936"><tspan class="fk">FK</tspan> segment_id</text>
+  <text class="attr" x="600" y="952"><tspan class="fk">FK</tspan> user_id</text>
+  <text class="attr" x="600" y="968">incident_type</text>
+  <text class="attr" x="600" y="984">reported_at</text>
+  <text class="attr" x="600" y="1000">expires_at (&gt; reported_at)</text></g>
+
+  <!-- LEGEND -->
+  <g><rect class="entity" x="1140" y="880" width="230" height="162"/><rect class="head" x="1140" y="880" width="230" height="24"/>
+  <text class="hname" x="1150" y="897">LEGEND</text>
+  <text class="attr" x="1150" y="920"><tspan class="pk">PK</tspan> primary key</text>
+  <text class="attr" x="1150" y="936"><tspan class="fk">FK</tspan> foreign key</text>
+  <text class="attr" x="1150" y="952"><tspan class="uk">UK</tspan> unique / candidate key</text>
+  <text class="attr" x="1150" y="968">1 — N : one-to-many</text>
+  <text class="attr" x="1150" y="984">(null) = nullable column</text>
+  <text class="attr" x="1150" y="1000">Schema: gmaps (all tables)</text>
+  <text class="attr" x="1150" y="1016">11 tables · 15 FKs · 28 CHECKs</text></g>
+</svg>

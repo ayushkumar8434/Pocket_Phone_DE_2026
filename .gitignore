@@ -1,0 +1,23 @@
+# Seed / large data CSVs are not committed (provided by faculty, too large)
+seed_data/
+large_data/
+*.zip
+
+# macOS noise
+.DS_Store
+
+# Scratch / local analysis files (not deliverables)
+scratch_*.sql
+scratch_*.out
+.shell_probe.txt
+.probe*.txt
+
+# Shell / OS junk
+*.swp
+__pycache__/
+
+# Local CP1 run artifacts (not deliverables)
+.cp1_run.sh
+.cp1_run.log
+.cp1_status.txt
+.bgtest.txt

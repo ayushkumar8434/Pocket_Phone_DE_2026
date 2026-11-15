@@ -1,0 +1,120 @@
+%% Google Maps Navigation Database — ER diagram
+%% Owner: Ayush Kumar (Group Lead) — CP1 deliverable
+%% Render: mmdc -i er_diagram.mmd -o er_diagram.png  (Phase 4/5 renders to PNG)
+erDiagram
+    CITIES ||--o{ PLACES : "has"
+    PLACE_CATEGORIES ||--o{ PLACES : "classifies"
+    CITIES ||--o{ USERS : "home_city_of"
+    PLACES ||--o{ OPENING_HOURS : "has_hours"
+    PLACES ||--o{ PLACE_REVIEWS : "reviewed_in"
+    USERS ||--o{ PLACE_REVIEWS : "writes"
+    USERS ||--o{ SAVED_PLACES : "saves"
+    PLACES ||--o{ SAVED_PLACES : "saved_as"
+    CITIES ||--o{ ROAD_SEGMENTS : "contains"
+    ROAD_SEGMENTS ||--o{ TRAFFIC_READINGS : "reports"
+    ROAD_SEGMENTS ||--o{ INCIDENT_REPORTS : "has"
+    USERS ||--o{ INCIDENT_REPORTS : "reports"
+    USERS ||--o{ NAVIGATION_SESSIONS : "starts (nullable)"
+    PLACES ||--o{ NAVIGATION_SESSIONS : "origin_of (nullable)"
+    PLACES ||--o{ NAVIGATION_SESSIONS : "destination_of"
+
+    CITIES {
+        int  city_id PK
+        text city_name UK
+        numeric center_lat
+        numeric center_lng
+    }
+    PLACE_CATEGORIES {
+        int  category_id PK
+        text category_name UK
+    }
+    USERS {
+        int     user_id PK
+        text    display_name
+        text    email UK
+        int     home_city_id FK
+        boolean is_local_guide
+        int     guide_level
+        timestamptz created_at
+    }
+    PLACES {
+        int     place_id PK
+        text    plus_code UK
+        text    name
+        int     category_id FK
+        int     city_id FK
+        numeric latitude
+        numeric longitude
+        text    address
+        text    phone UK
+        text    website
+        int     price_level
+        numeric avg_rating
+        int     review_count
+        boolean is_permanently_closed
+        timestamptz created_at
+    }
+    OPENING_HOURS {
+        int  place_id PK_FK
+        int  weekday PK
+        time opens
+        time closes
+    }
+    PLACE_REVIEWS {
+        int        review_id PK
+        int        place_id FK
+        int        user_id FK
+        int        rating
+        text       review_text
+        int        photo_count
+        timestamptz created_at
+    }
+    SAVED_PLACES {
+        int        user_id PK_FK
+        int        place_id PK_FK
+        text       list_name PK
+        timestamptz saved_at
+    }
+    ROAD_SEGMENTS {
+        int     segment_id PK
+        text    road_name
+        int     city_id FK
+        text    road_type
+        numeric start_lat
+        numeric start_lng
+        numeric end_lat
+        numeric end_lng
+        int     length_m
+        int     speed_limit_kmph
+    }
+    TRAFFIC_READINGS {
+        int        reading_id PK
+        int        segment_id FK
+        timestamptz recorded_at
+        numeric    avg_speed_kmph
+        text       congestion_level
+    }
+    NAVIGATION_SESSIONS {
+        int        session_id PK
+        int        user_id FK
+        int        origin_place_id FK
+        numeric    origin_lat
+        numeric    origin_lng
+        int        dest_place_id FK
+        text       travel_mode
+        timestamptz started_at
+        numeric    distance_km
+        int        eta_minutes
+        int        actual_minutes
+        int        rerouted_count
+        text       status
+    }
+    INCIDENT_REPORTS {
+        int        report_id PK
+        int        segment_id FK
+        int        user_id FK
+        text       incident_type
+        timestamptz reported_at
+        timestamptz expires_at
+        int        upvotes
+    }
