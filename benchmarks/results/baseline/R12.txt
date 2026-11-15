@@ -1,0 +1,96 @@
+=== R12 run 1 ===
+Limit  (cost=6937.82..6937.85 rows=10 width=32) (actual time=10.013..10.014 rows=10.00 loops=1)
+  Buffers: shared hit=3822
+  ->  Sort  (cost=6937.82..6938.87 rows=420 width=32) (actual time=10.012..10.013 rows=10.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        Buffers: shared hit=3822
+        ->  GroupAggregate  (cost=6921.40..6928.75 rows=420 width=32) (actual time=9.938..9.986 rows=376.00 loops=1)
+              Group Key: p.place_id
+              Buffers: shared hit=3819
+              ->  Sort  (cost=6921.40..6922.45 rows=420 width=24) (actual time=9.935..9.943 rows=400.00 loops=1)
+                    Sort Key: p.place_id
+                    Sort Method: quicksort  Memory: 41kB
+                    Buffers: shared hit=3819
+                    ->  Hash Join  (cost=1492.16..6903.10 rows=420 width=24) (actual time=9.654..9.893 rows=400.00 loops=1)
+                          Hash Cond: (n.dest_place_id = p.place_id)
+                          Buffers: shared hit=3816
+                          ->  Seq Scan on navigation_sessions n  (cost=0.00..5404.00 rows=2642 width=4) (actual time=7.443..7.556 rows=2564.00 loops=1)
+                                Filter: (started_at >= '2026-06-24 00:00:00+05:30'::timestamp with time zone)
+                                Rows Removed by Filter: 197436
+                                Buffers: shared hit=2904
+                          ->  Hash  (cost=1412.53..1412.53 rows=6371 width=24) (actual time=2.199..2.199 rows=6400.00 loops=1)
+                                Buckets: 8192  Batches: 1  Memory Usage: 415kB
+                                Buffers: shared hit=912
+                                ->  Seq Scan on places p  (cost=0.00..1412.53 rows=6371 width=24) (actual time=0.009..1.869 rows=6400.00 loops=1)
+                                      Filter: (city_id = 2)
+                                      Rows Removed by Filter: 33642
+                                      Buffers: shared hit=912
+Planning:
+  Buffers: shared hit=193
+Planning Time: 0.333 ms
+Execution Time: 10.040 ms
+=== R12 run 2 ===
+Limit  (cost=6937.82..6937.85 rows=10 width=32) (actual time=10.059..10.060 rows=10.00 loops=1)
+  Buffers: shared hit=3822
+  ->  Sort  (cost=6937.82..6938.87 rows=420 width=32) (actual time=10.058..10.059 rows=10.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        Buffers: shared hit=3822
+        ->  GroupAggregate  (cost=6921.40..6928.75 rows=420 width=32) (actual time=9.991..10.034 rows=376.00 loops=1)
+              Group Key: p.place_id
+              Buffers: shared hit=3819
+              ->  Sort  (cost=6921.40..6922.45 rows=420 width=24) (actual time=9.988..9.995 rows=400.00 loops=1)
+                    Sort Key: p.place_id
+                    Sort Method: quicksort  Memory: 41kB
+                    Buffers: shared hit=3819
+                    ->  Hash Join  (cost=1492.16..6903.10 rows=420 width=24) (actual time=9.709..9.948 rows=400.00 loops=1)
+                          Hash Cond: (n.dest_place_id = p.place_id)
+                          Buffers: shared hit=3816
+                          ->  Seq Scan on navigation_sessions n  (cost=0.00..5404.00 rows=2642 width=4) (actual time=7.446..7.558 rows=2564.00 loops=1)
+                                Filter: (started_at >= '2026-06-24 00:00:00+05:30'::timestamp with time zone)
+                                Rows Removed by Filter: 197436
+                                Buffers: shared hit=2904
+                          ->  Hash  (cost=1412.53..1412.53 rows=6371 width=24) (actual time=2.252..2.253 rows=6400.00 loops=1)
+                                Buckets: 8192  Batches: 1  Memory Usage: 415kB
+                                Buffers: shared hit=912
+                                ->  Seq Scan on places p  (cost=0.00..1412.53 rows=6371 width=24) (actual time=0.006..1.907 rows=6400.00 loops=1)
+                                      Filter: (city_id = 2)
+                                      Rows Removed by Filter: 33642
+                                      Buffers: shared hit=912
+Planning:
+  Buffers: shared hit=193
+Planning Time: 0.315 ms
+Execution Time: 10.085 ms
+=== R12 run 3 ===
+Limit  (cost=6937.82..6937.85 rows=10 width=32) (actual time=10.007..10.008 rows=10.00 loops=1)
+  Buffers: shared hit=3822
+  ->  Sort  (cost=6937.82..6938.87 rows=420 width=32) (actual time=10.006..10.006 rows=10.00 loops=1)
+        Sort Key: (count(*)) DESC
+        Sort Method: top-N heapsort  Memory: 25kB
+        Buffers: shared hit=3822
+        ->  GroupAggregate  (cost=6921.40..6928.75 rows=420 width=32) (actual time=9.931..9.979 rows=376.00 loops=1)
+              Group Key: p.place_id
+              Buffers: shared hit=3819
+              ->  Sort  (cost=6921.40..6922.45 rows=420 width=24) (actual time=9.928..9.936 rows=400.00 loops=1)
+                    Sort Key: p.place_id
+                    Sort Method: quicksort  Memory: 41kB
+                    Buffers: shared hit=3819
+                    ->  Hash Join  (cost=1492.16..6903.10 rows=420 width=24) (actual time=9.621..9.883 rows=400.00 loops=1)
+                          Hash Cond: (n.dest_place_id = p.place_id)
+                          Buffers: shared hit=3816
+                          ->  Seq Scan on navigation_sessions n  (cost=0.00..5404.00 rows=2642 width=4) (actual time=7.363..7.485 rows=2564.00 loops=1)
+                                Filter: (started_at >= '2026-06-24 00:00:00+05:30'::timestamp with time zone)
+                                Rows Removed by Filter: 197436
+                                Buffers: shared hit=2904
+                          ->  Hash  (cost=1412.53..1412.53 rows=6371 width=24) (actual time=2.245..2.245 rows=6400.00 loops=1)
+                                Buckets: 8192  Batches: 1  Memory Usage: 415kB
+                                Buffers: shared hit=912
+                                ->  Seq Scan on places p  (cost=0.00..1412.53 rows=6371 width=24) (actual time=0.007..1.890 rows=6400.00 loops=1)
+                                      Filter: (city_id = 2)
+                                      Rows Removed by Filter: 33642
+                                      Buffers: shared hit=912
+Planning:
+  Buffers: shared hit=193
+Planning Time: 0.328 ms
+Execution Time: 10.034 ms

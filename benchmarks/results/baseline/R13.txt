@@ -1,0 +1,36 @@
+=== R13 run 1 ===
+Seq Scan on places p  (cost=5404.00..6816.52 rows=20021 width=24) (actual time=20.474..20.475 rows=0.00 loops=1)
+  Filter: (NOT (ANY (place_id = (hashed SubPlan 1).col1)))
+  Rows Removed by Filter: 40042
+  Buffers: shared hit=3816
+  SubPlan 1
+    ->  Seq Scan on navigation_sessions n  (cost=0.00..4904.00 rows=200000 width=4) (actual time=0.005..7.836 rows=200000.00 loops=1)
+          Buffers: shared hit=2904
+Planning:
+  Buffers: shared hit=102
+Planning Time: 0.236 ms
+Execution Time: 20.512 ms
+=== R13 run 2 ===
+Seq Scan on places p  (cost=5404.00..6816.52 rows=20021 width=24) (actual time=19.789..19.789 rows=0.00 loops=1)
+  Filter: (NOT (ANY (place_id = (hashed SubPlan 1).col1)))
+  Rows Removed by Filter: 40042
+  Buffers: shared hit=3816
+  SubPlan 1
+    ->  Seq Scan on navigation_sessions n  (cost=0.00..4904.00 rows=200000 width=4) (actual time=0.005..7.697 rows=200000.00 loops=1)
+          Buffers: shared hit=2904
+Planning:
+  Buffers: shared hit=102
+Planning Time: 0.228 ms
+Execution Time: 19.824 ms
+=== R13 run 3 ===
+Seq Scan on places p  (cost=5404.00..6816.52 rows=20021 width=24) (actual time=19.796..19.796 rows=0.00 loops=1)
+  Filter: (NOT (ANY (place_id = (hashed SubPlan 1).col1)))
+  Rows Removed by Filter: 40042
+  Buffers: shared hit=3816
+  SubPlan 1
+    ->  Seq Scan on navigation_sessions n  (cost=0.00..4904.00 rows=200000 width=4) (actual time=0.005..7.619 rows=200000.00 loops=1)
+          Buffers: shared hit=2904
+Planning:
+  Buffers: shared hit=102
+Planning Time: 0.237 ms
+Execution Time: 19.835 ms

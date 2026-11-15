@@ -1,0 +1,75 @@
+=== R13 run 1 ===
+Merge Anti Join  (cost=0.57..2342.72 rows=34231 width=24) (actual time=0.051..6.006 rows=33368.00 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=2098 read=125 dirtied=110
+  ->  Index Scan using places_pkey on places p  (cost=0.29..2144.46 rows=40042 width=24) (actual time=0.002..3.613 rows=40042.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=2096 read=104 dirtied=110
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.28..208.67 rows=200000 width=4) (actual time=0.035..0.293 rows=7416.00 loops=1)
+        Heap Fetches: 1
+        Index Searches: 1
+        Buffers: shared hit=2 read=21
+Planning:
+  Buffers: shared hit=435
+Planning Time: 0.605 ms
+Execution Time: 6.614 ms
+=== R13 run 2 ===
+Merge Anti Join  (cost=0.57..2342.72 rows=34231 width=24) (actual time=0.029..4.775 rows=33368.00 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=1022
+  ->  Index Scan using places_pkey on places p  (cost=0.29..2144.46 rows=40042 width=24) (actual time=0.002..2.421 rows=40042.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=999
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.28..208.67 rows=200000 width=4) (actual time=0.023..0.256 rows=7416.00 loops=1)
+        Heap Fetches: 1
+        Index Searches: 1
+        Buffers: shared hit=23
+Planning:
+  Buffers: shared hit=435
+Planning Time: 0.612 ms
+Execution Time: 5.397 ms
+=== R13 run 3 ===
+Merge Anti Join  (cost=0.57..2342.72 rows=34231 width=24) (actual time=0.028..4.619 rows=33368.00 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=1022
+  ->  Index Scan using places_pkey on places p  (cost=0.29..2144.46 rows=40042 width=24) (actual time=0.002..2.320 rows=40042.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=999
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.28..208.67 rows=200000 width=4) (actual time=0.023..0.249 rows=7416.00 loops=1)
+        Heap Fetches: 1
+        Index Searches: 1
+        Buffers: shared hit=23
+Planning:
+  Buffers: shared hit=435
+Planning Time: 0.564 ms
+Execution Time: 5.206 ms
+=== R13 run 4 ===
+Merge Anti Join  (cost=0.57..2342.72 rows=34231 width=24) (actual time=0.027..4.650 rows=33368.00 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=1022
+  ->  Index Scan using places_pkey on places p  (cost=0.29..2144.46 rows=40042 width=24) (actual time=0.002..2.350 rows=40042.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=999
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.28..208.67 rows=200000 width=4) (actual time=0.022..0.249 rows=7416.00 loops=1)
+        Heap Fetches: 1
+        Index Searches: 1
+        Buffers: shared hit=23
+Planning:
+  Buffers: shared hit=435
+Planning Time: 0.552 ms
+Execution Time: 5.249 ms
+=== R13 run 5 ===
+Merge Anti Join  (cost=0.57..2342.72 rows=34231 width=24) (actual time=0.027..4.614 rows=33368.00 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=1022
+  ->  Index Scan using places_pkey on places p  (cost=0.29..2144.46 rows=40042 width=24) (actual time=0.002..2.305 rows=40042.00 loops=1)
+        Index Searches: 1
+        Buffers: shared hit=999
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.28..208.67 rows=200000 width=4) (actual time=0.022..0.250 rows=7416.00 loops=1)
+        Heap Fetches: 1
+        Index Searches: 1
+        Buffers: shared hit=23
+Planning:
+  Buffers: shared hit=435
+Planning Time: 0.564 ms
+Execution Time: 5.218 ms

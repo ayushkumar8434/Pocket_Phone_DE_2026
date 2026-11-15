@@ -1,0 +1,85 @@
+=== R05 run 1 ===
+Limit  (cost=0.71..119.02 rows=10 width=52) (actual time=0.177..0.635 rows=10.00 loops=1)
+  Buffers: shared hit=20 read=23
+  ->  Nested Loop  (cost=0.71..391.14 rows=33 width=52) (actual time=0.177..0.634 rows=10.00 loops=1)
+        Buffers: shared hit=20 read=23
+        ->  Index Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.42..136.99 rows=33 width=46) (actual time=0.011..0.024 rows=10.00 loops=1)
+              Index Cond: (place_id = 18)
+              Index Searches: 1
+              Buffers: shared hit=10 read=3
+        ->  Index Scan using users_pkey on users u  (cost=0.29..7.70 rows=1 width=14) (actual time=0.061..0.061 rows=1.00 loops=10)
+              Index Cond: (user_id = r.user_id)
+              Index Searches: 10
+              Buffers: shared hit=10 read=20
+Planning:
+  Buffers: shared hit=297 read=9
+Planning Time: 1.202 ms
+Execution Time: 0.651 ms
+=== R05 run 2 ===
+Limit  (cost=0.71..119.02 rows=10 width=52) (actual time=0.010..0.037 rows=10.00 loops=1)
+  Buffers: shared hit=43
+  ->  Nested Loop  (cost=0.71..391.14 rows=33 width=52) (actual time=0.009..0.036 rows=10.00 loops=1)
+        Buffers: shared hit=43
+        ->  Index Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.42..136.99 rows=33 width=46) (actual time=0.006..0.015 rows=10.00 loops=1)
+              Index Cond: (place_id = 18)
+              Index Searches: 1
+              Buffers: shared hit=13
+        ->  Index Scan using users_pkey on users u  (cost=0.29..7.70 rows=1 width=14) (actual time=0.002..0.002 rows=1.00 loops=10)
+              Index Cond: (user_id = r.user_id)
+              Index Searches: 10
+              Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=304
+Planning Time: 0.370 ms
+Execution Time: 0.050 ms
+=== R05 run 3 ===
+Limit  (cost=0.71..119.02 rows=10 width=52) (actual time=0.010..0.039 rows=10.00 loops=1)
+  Buffers: shared hit=43
+  ->  Nested Loop  (cost=0.71..391.14 rows=33 width=52) (actual time=0.009..0.039 rows=10.00 loops=1)
+        Buffers: shared hit=43
+        ->  Index Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.42..136.99 rows=33 width=46) (actual time=0.006..0.016 rows=10.00 loops=1)
+              Index Cond: (place_id = 18)
+              Index Searches: 1
+              Buffers: shared hit=13
+        ->  Index Scan using users_pkey on users u  (cost=0.29..7.70 rows=1 width=14) (actual time=0.002..0.002 rows=1.00 loops=10)
+              Index Cond: (user_id = r.user_id)
+              Index Searches: 10
+              Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=304
+Planning Time: 0.395 ms
+Execution Time: 0.054 ms
+=== R05 run 4 ===
+Limit  (cost=0.71..119.02 rows=10 width=52) (actual time=0.010..0.039 rows=10.00 loops=1)
+  Buffers: shared hit=43
+  ->  Nested Loop  (cost=0.71..391.14 rows=33 width=52) (actual time=0.010..0.038 rows=10.00 loops=1)
+        Buffers: shared hit=43
+        ->  Index Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.42..136.99 rows=33 width=46) (actual time=0.006..0.016 rows=10.00 loops=1)
+              Index Cond: (place_id = 18)
+              Index Searches: 1
+              Buffers: shared hit=13
+        ->  Index Scan using users_pkey on users u  (cost=0.29..7.70 rows=1 width=14) (actual time=0.002..0.002 rows=1.00 loops=10)
+              Index Cond: (user_id = r.user_id)
+              Index Searches: 10
+              Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=304
+Planning Time: 0.395 ms
+Execution Time: 0.052 ms
+=== R05 run 5 ===
+Limit  (cost=0.71..119.02 rows=10 width=52) (actual time=0.011..0.048 rows=10.00 loops=1)
+  Buffers: shared hit=43
+  ->  Nested Loop  (cost=0.71..391.14 rows=33 width=52) (actual time=0.011..0.047 rows=10.00 loops=1)
+        Buffers: shared hit=43
+        ->  Index Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.42..136.99 rows=33 width=46) (actual time=0.008..0.019 rows=10.00 loops=1)
+              Index Cond: (place_id = 18)
+              Index Searches: 1
+              Buffers: shared hit=13
+        ->  Index Scan using users_pkey on users u  (cost=0.29..7.70 rows=1 width=14) (actual time=0.002..0.002 rows=1.00 loops=10)
+              Index Cond: (user_id = r.user_id)
+              Index Searches: 10
+              Buffers: shared hit=30
+Planning:
+  Buffers: shared hit=304
+Planning Time: 0.485 ms
+Execution Time: 0.065 ms

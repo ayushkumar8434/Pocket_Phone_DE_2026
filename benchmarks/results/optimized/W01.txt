@@ -1,0 +1,45 @@
+=== W01 run 1 ===
+Insert on navigation_sessions  (cost=0.00..0.01 rows=0 width=0) (actual time=1.143..1.144 rows=0.00 loops=1)
+  Buffers: shared hit=131 read=7 dirtied=4
+  ->  Result  (cost=0.00..0.01 rows=1 width=142) (actual time=0.002..0.002 rows=1.00 loops=1)
+Planning Time: 0.036 ms
+Trigger for constraint navigation_sessions_user_id_fkey: time=0.760 calls=1
+Trigger for constraint navigation_sessions_origin_place_id_fkey: time=0.016 calls=1
+Trigger for constraint navigation_sessions_dest_place_id_fkey: time=0.261 calls=1
+Execution Time: 2.192 ms
+=== W01 run 2 ===
+Insert on navigation_sessions  (cost=0.00..0.01 rows=0 width=0) (actual time=0.156..0.156 rows=0.00 loops=1)
+  Buffers: shared hit=138
+  ->  Result  (cost=0.00..0.01 rows=1 width=142) (actual time=0.002..0.002 rows=1.00 loops=1)
+Planning Time: 0.033 ms
+Trigger for constraint navigation_sessions_user_id_fkey: time=0.216 calls=1
+Trigger for constraint navigation_sessions_origin_place_id_fkey: time=0.013 calls=1
+Trigger for constraint navigation_sessions_dest_place_id_fkey: time=0.225 calls=1
+Execution Time: 0.620 ms
+=== W01 run 3 ===
+Insert on navigation_sessions  (cost=0.00..0.01 rows=0 width=0) (actual time=0.160..0.160 rows=0.00 loops=1)
+  Buffers: shared hit=138 dirtied=1
+  ->  Result  (cost=0.00..0.01 rows=1 width=142) (actual time=0.002..0.002 rows=1.00 loops=1)
+Planning Time: 0.032 ms
+Trigger for constraint navigation_sessions_user_id_fkey: time=0.218 calls=1
+Trigger for constraint navigation_sessions_origin_place_id_fkey: time=0.013 calls=1
+Trigger for constraint navigation_sessions_dest_place_id_fkey: time=0.224 calls=1
+Execution Time: 0.626 ms
+=== W01 run 4 ===
+Insert on navigation_sessions  (cost=0.00..0.01 rows=0 width=0) (actual time=0.170..0.170 rows=0.00 loops=1)
+  Buffers: shared hit=138
+  ->  Result  (cost=0.00..0.01 rows=1 width=142) (actual time=0.002..0.002 rows=1.00 loops=1)
+Planning Time: 0.034 ms
+Trigger for constraint navigation_sessions_user_id_fkey: time=0.237 calls=1
+Trigger for constraint navigation_sessions_origin_place_id_fkey: time=0.013 calls=1
+Trigger for constraint navigation_sessions_dest_place_id_fkey: time=0.245 calls=1
+Execution Time: 0.675 ms
+=== W01 run 5 ===
+Insert on navigation_sessions  (cost=0.00..0.01 rows=0 width=0) (actual time=0.159..0.160 rows=0.00 loops=1)
+  Buffers: shared hit=138
+  ->  Result  (cost=0.00..0.01 rows=1 width=142) (actual time=0.002..0.002 rows=1.00 loops=1)
+Planning Time: 0.031 ms
+Trigger for constraint navigation_sessions_user_id_fkey: time=0.228 calls=1
+Trigger for constraint navigation_sessions_origin_place_id_fkey: time=0.022 calls=1
+Trigger for constraint navigation_sessions_dest_place_id_fkey: time=0.311 calls=1
+Execution Time: 0.730 ms
