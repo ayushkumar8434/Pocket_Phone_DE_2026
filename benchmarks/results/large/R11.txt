@@ -1,51 +1,48 @@
 === R11 run 1 ===
-GroupAggregate  (cost=200326.12..236496.90 rows=1112947 width=55) (actual time=459.119..542.287 rows=24 loops=1)
+GroupAggregate  (cost=185953.81..222669.77 rows=1129722 width=55) (actual time=355.130..439.200 rows=24 loops=1)
   Group Key: (date_trunc('month'::text, started_at)), travel_mode
-  Buffers: shared hit=7 read=22861 written=5672, temp read=9688 written=9706
-  ->  Sort  (cost=200326.12..203108.49 rows=1112947 width=23) (actual time=452.609..489.751 rows=1125819 loops=1)
+  Buffers: shared hit=7 read=5902 written=4973, temp read=9688 written=9706
+  ->  Sort  (cost=185953.81..188778.11 rows=1129722 width=23) (actual time=348.622..386.296 rows=1125819 loops=1)
         Sort Key: (date_trunc('month'::text, started_at)), travel_mode
         Sort Method: external merge  Disk: 38784kB
-        Buffers: shared hit=7 read=22861 written=5672, temp read=9688 written=9706
-        ->  Index Scan using idx_nav_started_date on navigation_sessions  (cost=0.43..65726.12 rows=1112947 width=23) (actual time=0.058..252.981 rows=1125819 loops=1)
+        Buffers: shared hit=7 read=5902 written=4973, temp read=9688 written=9706
+        ->  Index Only Scan using navigation_completed_started_idx on navigation_sessions  (cost=0.43..49204.18 rows=1129722 width=23) (actual time=0.053..147.166 rows=1125819 loops=1)
               Index Cond: ((started_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2027-01-01 00:00:00+05:30'::timestamp with time zone))
-              Filter: ((status)::text = 'COMPLETED'::text)
-              Rows Removed by Filter: 200188
-              Buffers: shared hit=1 read=22861 written=5672
+              Heap Fetches: 0
+              Buffers: shared hit=1 read=5902 written=4973
 Planning:
-  Buffers: shared hit=240 read=21 dirtied=2
-Planning Time: 1.901 ms
-Execution Time: 548.860 ms
+  Buffers: shared hit=186 read=13 dirtied=2
+Planning Time: 2.135 ms
+Execution Time: 445.796 ms
 === R11 run 2 ===
-GroupAggregate  (cost=200326.12..236496.90 rows=1112947 width=55) (actual time=427.571..510.818 rows=24 loops=1)
+GroupAggregate  (cost=185953.81..222669.77 rows=1129722 width=55) (actual time=309.622..392.001 rows=24 loops=1)
   Group Key: (date_trunc('month'::text, started_at)), travel_mode
-  Buffers: shared hit=9 read=22859 written=63, temp read=9688 written=9706
-  ->  Sort  (cost=200326.12..203108.49 rows=1112947 width=23) (actual time=421.149..458.587 rows=1125819 loops=1)
+  Buffers: shared hit=5909, temp read=9688 written=9706
+  ->  Sort  (cost=185953.81..188778.11 rows=1129722 width=23) (actual time=303.346..340.195 rows=1125819 loops=1)
         Sort Key: (date_trunc('month'::text, started_at)), travel_mode
         Sort Method: external merge  Disk: 38784kB
-        Buffers: shared hit=9 read=22859 written=63, temp read=9688 written=9706
-        ->  Index Scan using idx_nav_started_date on navigation_sessions  (cost=0.43..65726.12 rows=1112947 width=23) (actual time=0.012..222.808 rows=1125819 loops=1)
+        Buffers: shared hit=5909, temp read=9688 written=9706
+        ->  Index Only Scan using navigation_completed_started_idx on navigation_sessions  (cost=0.43..49204.18 rows=1129722 width=23) (actual time=0.011..110.718 rows=1125819 loops=1)
               Index Cond: ((started_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2027-01-01 00:00:00+05:30'::timestamp with time zone))
-              Filter: ((status)::text = 'COMPLETED'::text)
-              Rows Removed by Filter: 200188
-              Buffers: shared hit=3 read=22859 written=63
+              Heap Fetches: 0
+              Buffers: shared hit=5903
 Planning:
-  Buffers: shared hit=243 read=16
-Planning Time: 0.531 ms
-Execution Time: 517.339 ms
+  Buffers: shared hit=197
+Planning Time: 0.348 ms
+Execution Time: 398.463 ms
 === R11 run 3 ===
-GroupAggregate  (cost=200326.12..236496.90 rows=1112947 width=55) (actual time=412.541..497.044 rows=24 loops=1)
+GroupAggregate  (cost=185953.81..222669.77 rows=1129722 width=55) (actual time=313.401..395.280 rows=24 loops=1)
   Group Key: (date_trunc('month'::text, started_at)), travel_mode
-  Buffers: shared hit=7 read=22861, temp read=9688 written=9706
-  ->  Sort  (cost=200326.12..203108.49 rows=1112947 width=23) (actual time=406.099..444.635 rows=1125819 loops=1)
+  Buffers: shared hit=5909, temp read=9688 written=9706
+  ->  Sort  (cost=185953.81..188778.11 rows=1129722 width=23) (actual time=306.868..343.774 rows=1125819 loops=1)
         Sort Key: (date_trunc('month'::text, started_at)), travel_mode
         Sort Method: external merge  Disk: 38784kB
-        Buffers: shared hit=7 read=22861, temp read=9688 written=9706
-        ->  Index Scan using idx_nav_started_date on navigation_sessions  (cost=0.43..65726.12 rows=1112947 width=23) (actual time=0.012..214.754 rows=1125819 loops=1)
+        Buffers: shared hit=5909, temp read=9688 written=9706
+        ->  Index Only Scan using navigation_completed_started_idx on navigation_sessions  (cost=0.43..49204.18 rows=1129722 width=23) (actual time=0.010..116.633 rows=1125819 loops=1)
               Index Cond: ((started_at >= '2026-01-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2027-01-01 00:00:00+05:30'::timestamp with time zone))
-              Filter: ((status)::text = 'COMPLETED'::text)
-              Rows Removed by Filter: 200188
-              Buffers: shared hit=1 read=22861
+              Heap Fetches: 0
+              Buffers: shared hit=5903
 Planning:
-  Buffers: shared hit=234 read=25
-Planning Time: 0.629 ms
-Execution Time: 503.557 ms
+  Buffers: shared hit=197
+Planning Time: 0.334 ms
+Execution Time: 401.778 ms

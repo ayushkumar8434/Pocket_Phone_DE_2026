@@ -1,51 +1,54 @@
 === R15 run 1 ===
-GroupAggregate  (cost=130.86..212568.66 rows=800980 width=53) (actual time=1.282..995.547 rows=11270 loops=1)
+GroupAggregate  (cost=25.97..165063.82 rows=800732 width=53) (actual time=0.092..449.438 rows=11270 loops=1)
   Group Key: p.place_id
   Filter: ((p.review_count <> count(*)) OR (p.avg_rating <> round(avg(r.rating), 1)))
   Rows Removed by Filter: 678361
-  Buffers: shared hit=1743993 read=82645 written=2
-  ->  Merge Join  (cost=130.86..181044.01 rows=1799990 width=17) (actual time=0.017..807.414 rows=1799990 loops=1)
+  Buffers: shared hit=571 read=30670
+  ->  Merge Join  (cost=25.97..133545.01 rows=1799990 width=17) (actual time=0.010..271.227 rows=1799990 loops=1)
         Merge Cond: (p.place_id = r.place_id)
-        Buffers: shared hit=1743993 read=82645 written=2
-        ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=13) (actual time=0.003..60.165 rows=800001 loops=1)
-              Buffers: shared hit=392 read=20001
-        ->  Index Scan using reviews_unique_user_place on place_reviews r  (cost=0.43..117380.27 rows=1799990 width=8) (actual time=0.012..570.982 rows=1799990 loops=1)
-              Buffers: shared hit=1743601 read=62644 written=2
+        Buffers: shared hit=571 read=30670
+        ->  Index Scan using places_pkey on places p  (cost=0.42..38481.13 rows=800853 width=13) (actual time=0.006..61.393 rows=800001 loops=1)
+              Buffers: shared hit=566 read=19827
+        ->  Index Only Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.43..70604.28 rows=1799990 width=8) (actual time=0.002..78.478 rows=1799990 loops=1)
+              Heap Fetches: 65
+              Buffers: shared hit=5 read=10843
 Planning:
-  Buffers: shared hit=317 read=19
-Planning Time: 0.684 ms
-Execution Time: 995.788 ms
+  Buffers: shared hit=361 read=23
+Planning Time: 0.782 ms
+Execution Time: 449.675 ms
 === R15 run 2 ===
-GroupAggregate  (cost=130.86..212568.66 rows=800980 width=53) (actual time=0.924..994.748 rows=11270 loops=1)
+GroupAggregate  (cost=25.97..165063.82 rows=800732 width=53) (actual time=0.088..457.489 rows=11270 loops=1)
   Group Key: p.place_id
   Filter: ((p.review_count <> count(*)) OR (p.avg_rating <> round(avg(r.rating), 1)))
   Rows Removed by Filter: 678361
-  Buffers: shared hit=1758397 read=68241
-  ->  Merge Join  (cost=130.86..181044.01 rows=1799990 width=17) (actual time=0.021..797.893 rows=1799990 loops=1)
+  Buffers: shared hit=571 read=30670
+  ->  Merge Join  (cost=25.97..133545.01 rows=1799990 width=17) (actual time=0.009..282.407 rows=1799990 loops=1)
         Merge Cond: (p.place_id = r.place_id)
-        Buffers: shared hit=1758397 read=68241
-        ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=13) (actual time=0.003..60.643 rows=800001 loops=1)
-              Buffers: shared hit=392 read=20001
-        ->  Index Scan using reviews_unique_user_place on place_reviews r  (cost=0.43..117380.27 rows=1799990 width=8) (actual time=0.016..557.186 rows=1799990 loops=1)
-              Buffers: shared hit=1758005 read=48240
+        Buffers: shared hit=571 read=30670
+        ->  Index Scan using places_pkey on places p  (cost=0.42..38481.13 rows=800853 width=13) (actual time=0.006..62.375 rows=800001 loops=1)
+              Buffers: shared hit=566 read=19827
+        ->  Index Only Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.43..70604.28 rows=1799990 width=8) (actual time=0.002..77.119 rows=1799990 loops=1)
+              Heap Fetches: 65
+              Buffers: shared hit=5 read=10843
 Planning:
-  Buffers: shared hit=275 read=61
-Planning Time: 0.786 ms
-Execution Time: 994.988 ms
+  Buffers: shared hit=359 read=25
+Planning Time: 0.711 ms
+Execution Time: 457.725 ms
 === R15 run 3 ===
-GroupAggregate  (cost=130.86..212568.66 rows=800980 width=53) (actual time=0.940..994.616 rows=11270 loops=1)
+GroupAggregate  (cost=25.97..165063.82 rows=800732 width=53) (actual time=0.089..441.119 rows=11270 loops=1)
   Group Key: p.place_id
   Filter: ((p.review_count <> count(*)) OR (p.avg_rating <> round(avg(r.rating), 1)))
   Rows Removed by Filter: 678361
-  Buffers: shared hit=1758246 read=68392
-  ->  Merge Join  (cost=130.86..181044.01 rows=1799990 width=17) (actual time=0.019..804.426 rows=1799990 loops=1)
+  Buffers: shared hit=571 read=30670
+  ->  Merge Join  (cost=25.97..133545.01 rows=1799990 width=17) (actual time=0.009..266.979 rows=1799990 loops=1)
         Merge Cond: (p.place_id = r.place_id)
-        Buffers: shared hit=1758246 read=68392
-        ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=13) (actual time=0.003..60.832 rows=800001 loops=1)
-              Buffers: shared hit=392 read=20001
-        ->  Index Scan using reviews_unique_user_place on place_reviews r  (cost=0.43..117380.27 rows=1799990 width=8) (actual time=0.015..563.717 rows=1799990 loops=1)
-              Buffers: shared hit=1757854 read=48391
+        Buffers: shared hit=571 read=30670
+        ->  Index Scan using places_pkey on places p  (cost=0.42..38481.13 rows=800853 width=13) (actual time=0.005..61.209 rows=800001 loops=1)
+              Buffers: shared hit=566 read=19827
+        ->  Index Only Scan using place_reviews_place_newest_idx on place_reviews r  (cost=0.43..70604.28 rows=1799990 width=8) (actual time=0.002..74.031 rows=1799990 loops=1)
+              Heap Fetches: 65
+              Buffers: shared hit=5 read=10843
 Planning:
-  Buffers: shared hit=275 read=61
-Planning Time: 0.779 ms
-Execution Time: 994.863 ms
+  Buffers: shared hit=339 read=45
+Planning Time: 0.973 ms
+Execution Time: 441.360 ms

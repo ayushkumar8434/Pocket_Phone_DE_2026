@@ -1,69 +1,69 @@
 === R03 run 1 ===
-Limit  (cost=18150.02..18150.07 rows=20 width=34) (actual time=27.103..27.105 rows=20 loops=1)
-  Buffers: shared hit=170 read=6789 dirtied=3452 written=221
-  ->  Sort  (cost=18150.02..18162.81 rows=5114 width=34) (actual time=27.102..27.103 rows=20 loops=1)
+Limit  (cost=14416.71..14416.76 rows=20 width=34) (actual time=34.466..34.469 rows=20 loops=1)
+  Buffers: shared hit=771 read=5023 written=3488
+  ->  Sort  (cost=14416.71..14430.14 rows=5370 width=34) (actual time=34.466..34.467 rows=20 loops=1)
         Sort Key: avg_rating DESC NULLS LAST, review_count DESC
         Sort Method: top-N heapsort  Memory: 27kB
-        Buffers: shared hit=170 read=6789 dirtied=3452 written=221
-        ->  Bitmap Heap Scan on places  (cost=6633.93..18013.94 rows=5114 width=34) (actual time=11.838..26.564 rows=5386 loops=1)
-              Recheck Cond: (((name)::text ~~* '%biryani%'::text) AND (city_id IS NOT NULL) AND (city_id = 1))
-              Heap Blocks: exact=5518
-              Buffers: shared hit=164 read=6789 dirtied=3452 written=221
-              ->  BitmapAnd  (cost=6633.93..6633.93 rows=5114 width=0) (actual time=11.410..11.410 rows=0 loops=1)
-                    Buffers: shared hit=87 read=1348
-                    ->  Bitmap Index Scan on idx_places_city_name_gin  (cost=0.00..1325.38 rows=32368 width=0) (actual time=4.087..4.087 rows=34805 loops=1)
-                          Index Cond: ((name)::text ~~* '%biryani%'::text)
-                          Buffers: shared hit=68 read=264
-                    ->  Bitmap Index Scan on idx_places_duplicate_check  (cost=0.00..5305.74 rows=126576 width=0) (actual time=6.947..6.947 rows=134125 loops=1)
+        Buffers: shared hit=771 read=5023 written=3488
+        ->  Bitmap Heap Scan on places  (cost=2731.42..14273.82 rows=5370 width=34) (actual time=9.003..33.766 rows=5386 loops=1)
+              Recheck Cond: ((name ~~* '%biryani%'::text) AND (city_id = 1))
+              Heap Blocks: exact=5349
+              Buffers: shared hit=765 read=5023 written=3488
+              ->  BitmapAnd  (cost=2731.42..2731.42 rows=5370 width=0) (actual time=8.568..8.569 rows=0 loops=1)
+                    Buffers: shared hit=178 read=261
+                    ->  Bitmap Index Scan on places_name_trgm_idx  (cost=0.00..271.20 rows=32358 width=0) (actual time=3.382..3.382 rows=33386 loops=1)
+                          Index Cond: (name ~~* '%biryani%'::text)
+                          Buffers: shared hit=52 read=32
+                    ->  Bitmap Index Scan on places_city_place_idx  (cost=0.00..2457.29 rows=132915 width=0) (actual time=4.880..4.880 rows=128853 loops=1)
                           Index Cond: (city_id = 1)
-                          Buffers: shared hit=19 read=1084
+                          Buffers: shared hit=126 read=229
 Planning:
-  Buffers: shared hit=208 read=5
-Planning Time: 0.943 ms
-Execution Time: 27.139 ms
+  Buffers: shared hit=267
+Planning Time: 0.873 ms
+Execution Time: 34.508 ms
 === R03 run 2 ===
-Limit  (cost=18150.02..18150.07 rows=20 width=34) (actual time=16.283..16.285 rows=20 loops=1)
-  Buffers: shared hit=6949 read=10
-  ->  Sort  (cost=18150.02..18162.81 rows=5114 width=34) (actual time=16.282..16.283 rows=20 loops=1)
+Limit  (cost=14416.71..14416.76 rows=20 width=34) (actual time=15.326..15.328 rows=20 loops=1)
+  Buffers: shared hit=5794
+  ->  Sort  (cost=14416.71..14430.14 rows=5370 width=34) (actual time=15.326..15.327 rows=20 loops=1)
         Sort Key: avg_rating DESC NULLS LAST, review_count DESC
         Sort Method: top-N heapsort  Memory: 27kB
-        Buffers: shared hit=6949 read=10
-        ->  Bitmap Heap Scan on places  (cost=6633.93..18013.94 rows=5114 width=34) (actual time=10.047..15.832 rows=5386 loops=1)
-              Recheck Cond: (((name)::text ~~* '%biryani%'::text) AND (city_id IS NOT NULL) AND (city_id = 1))
-              Heap Blocks: exact=5518
-              Buffers: shared hit=6943 read=10
-              ->  BitmapAnd  (cost=6633.93..6633.93 rows=5114 width=0) (actual time=9.650..9.651 rows=0 loops=1)
-                    Buffers: shared hit=1425 read=10
-                    ->  Bitmap Index Scan on idx_places_city_name_gin  (cost=0.00..1325.38 rows=32368 width=0) (actual time=4.069..4.069 rows=34805 loops=1)
-                          Index Cond: ((name)::text ~~* '%biryani%'::text)
-                          Buffers: shared hit=328 read=4
-                    ->  Bitmap Index Scan on idx_places_duplicate_check  (cost=0.00..5305.74 rows=126576 width=0) (actual time=5.195..5.195 rows=134125 loops=1)
+        Buffers: shared hit=5794
+        ->  Bitmap Heap Scan on places  (cost=2731.42..14273.82 rows=5370 width=34) (actual time=8.040..14.751 rows=5386 loops=1)
+              Recheck Cond: ((name ~~* '%biryani%'::text) AND (city_id = 1))
+              Heap Blocks: exact=5349
+              Buffers: shared hit=5788
+              ->  BitmapAnd  (cost=2731.42..2731.42 rows=5370 width=0) (actual time=7.643..7.643 rows=0 loops=1)
+                    Buffers: shared hit=439
+                    ->  Bitmap Index Scan on places_name_trgm_idx  (cost=0.00..271.20 rows=32358 width=0) (actual time=3.755..3.755 rows=33386 loops=1)
+                          Index Cond: (name ~~* '%biryani%'::text)
+                          Buffers: shared hit=84
+                    ->  Bitmap Index Scan on places_city_place_idx  (cost=0.00..2457.29 rows=132915 width=0) (actual time=3.532..3.532 rows=128853 loops=1)
                           Index Cond: (city_id = 1)
-                          Buffers: shared hit=1097 read=6
+                          Buffers: shared hit=355
 Planning:
-  Buffers: shared hit=213
-Planning Time: 0.817 ms
-Execution Time: 16.321 ms
+  Buffers: shared hit=267
+Planning Time: 0.878 ms
+Execution Time: 15.375 ms
 === R03 run 3 ===
-Limit  (cost=18150.02..18150.07 rows=20 width=34) (actual time=15.235..15.237 rows=20 loops=1)
-  Buffers: shared hit=6959
-  ->  Sort  (cost=18150.02..18162.81 rows=5114 width=34) (actual time=15.234..15.235 rows=20 loops=1)
+Limit  (cost=14416.71..14416.76 rows=20 width=34) (actual time=13.627..13.629 rows=20 loops=1)
+  Buffers: shared hit=5794
+  ->  Sort  (cost=14416.71..14430.14 rows=5370 width=34) (actual time=13.627..13.628 rows=20 loops=1)
         Sort Key: avg_rating DESC NULLS LAST, review_count DESC
         Sort Method: top-N heapsort  Memory: 27kB
-        Buffers: shared hit=6959
-        ->  Bitmap Heap Scan on places  (cost=6633.93..18013.94 rows=5114 width=34) (actual time=9.315..14.832 rows=5386 loops=1)
-              Recheck Cond: (((name)::text ~~* '%biryani%'::text) AND (city_id IS NOT NULL) AND (city_id = 1))
-              Heap Blocks: exact=5518
-              Buffers: shared hit=6953
-              ->  BitmapAnd  (cost=6633.93..6633.93 rows=5114 width=0) (actual time=8.928..8.929 rows=0 loops=1)
-                    Buffers: shared hit=1435
-                    ->  Bitmap Index Scan on idx_places_city_name_gin  (cost=0.00..1325.38 rows=32368 width=0) (actual time=3.867..3.867 rows=34805 loops=1)
-                          Index Cond: ((name)::text ~~* '%biryani%'::text)
-                          Buffers: shared hit=332
-                    ->  Bitmap Index Scan on idx_places_duplicate_check  (cost=0.00..5305.74 rows=126576 width=0) (actual time=4.700..4.700 rows=134125 loops=1)
+        Buffers: shared hit=5794
+        ->  Bitmap Heap Scan on places  (cost=2731.42..14273.82 rows=5370 width=34) (actual time=7.090..13.116 rows=5386 loops=1)
+              Recheck Cond: ((name ~~* '%biryani%'::text) AND (city_id = 1))
+              Heap Blocks: exact=5349
+              Buffers: shared hit=5788
+              ->  BitmapAnd  (cost=2731.42..2731.42 rows=5370 width=0) (actual time=6.652..6.652 rows=0 loops=1)
+                    Buffers: shared hit=439
+                    ->  Bitmap Index Scan on places_name_trgm_idx  (cost=0.00..271.20 rows=32358 width=0) (actual time=2.916..2.916 rows=33386 loops=1)
+                          Index Cond: (name ~~* '%biryani%'::text)
+                          Buffers: shared hit=84
+                    ->  Bitmap Index Scan on places_city_place_idx  (cost=0.00..2457.29 rows=132915 width=0) (actual time=3.326..3.326 rows=128853 loops=1)
                           Index Cond: (city_id = 1)
-                          Buffers: shared hit=1103
+                          Buffers: shared hit=355
 Planning:
-  Buffers: shared hit=213
-Planning Time: 0.794 ms
-Execution Time: 15.272 ms
+  Buffers: shared hit=267
+Planning Time: 0.830 ms
+Execution Time: 13.667 ms

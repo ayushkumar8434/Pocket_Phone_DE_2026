@@ -1,57 +1,57 @@
 === R17 run 1 ===
-Limit  (cost=133887.72..133887.77 rows=20 width=44) (actual time=455.105..455.107 rows=20 loops=1)
-  Buffers: shared hit=1555277 read=7769 dirtied=1
-  ->  Sort  (cost=133887.72..134310.13 rows=168961 width=44) (actual time=455.105..455.106 rows=20 loops=1)
+Limit  (cost=181499.85..181499.90 rows=20 width=44) (actual time=451.337..451.339 rows=20 loops=1)
+  Buffers: shared hit=1258860 read=11302 dirtied=1
+  ->  Sort  (cost=181499.85..181908.15 rows=163319 width=44) (actual time=451.337..451.338 rows=20 loops=1)
         Sort Key: (round(avg(rerouted_count), 2)) DESC
         Sort Method: top-N heapsort  Memory: 27kB
-        Buffers: shared hit=1555277 read=7769 dirtied=1
-        ->  GroupAggregate  (cost=0.43..129391.73 rows=168961 width=44) (actual time=0.078..434.173 rows=369688 loops=1)
+        Buffers: shared hit=1258860 read=11302 dirtied=1
+        ->  GroupAggregate  (cost=0.43..177153.99 rows=163319 width=44) (actual time=0.092..429.999 rows=369688 loops=1)
               Group Key: dest_place_id
               Filter: (count(*) >= 5)
               Rows Removed by Filter: 415437
-              Buffers: shared hit=1555274 read=7769 dirtied=1
-              ->  Index Only Scan using idx_nav_dest_reroutes on navigation_sessions  (cost=0.43..91374.87 rows=3998830 width=8) (actual time=0.025..197.776 rows=4000000 loops=1)
+              Buffers: shared hit=1258857 read=11302 dirtied=1
+              ->  Index Only Scan using navigation_dest_started_idx on navigation_sessions  (cost=0.43..139393.70 rows=4000352 width=8) (actual time=0.023..205.035 rows=4000000 loops=1)
                     Heap Fetches: 41
-                    Buffers: shared hit=1555274 read=7769 dirtied=1
+                    Buffers: shared hit=1258857 read=11302 dirtied=1
 Planning:
-  Buffers: shared hit=243 read=4
-Planning Time: 0.420 ms
-Execution Time: 455.136 ms
+  Buffers: shared hit=166 read=6
+Planning Time: 0.343 ms
+Execution Time: 451.364 ms
 === R17 run 2 ===
-Limit  (cost=133887.72..133887.77 rows=20 width=44) (actual time=465.916..465.917 rows=20 loops=1)
-  Buffers: shared hit=1562659 read=384
-  ->  Sort  (cost=133887.72..134310.13 rows=168961 width=44) (actual time=465.915..465.915 rows=20 loops=1)
+Limit  (cost=181499.85..181499.90 rows=20 width=44) (actual time=467.512..467.514 rows=20 loops=1)
+  Buffers: shared hit=1257251 read=12908
+  ->  Sort  (cost=181499.85..181908.15 rows=163319 width=44) (actual time=467.511..467.512 rows=20 loops=1)
         Sort Key: (round(avg(rerouted_count), 2)) DESC
         Sort Method: top-N heapsort  Memory: 27kB
-        Buffers: shared hit=1562659 read=384
-        ->  GroupAggregate  (cost=0.43..129391.73 rows=168961 width=44) (actual time=0.083..443.911 rows=369688 loops=1)
+        Buffers: shared hit=1257251 read=12908
+        ->  GroupAggregate  (cost=0.43..177153.99 rows=163319 width=44) (actual time=0.105..445.870 rows=369688 loops=1)
               Group Key: dest_place_id
               Filter: (count(*) >= 5)
               Rows Removed by Filter: 415437
-              Buffers: shared hit=1562656 read=384
-              ->  Index Only Scan using idx_nav_dest_reroutes on navigation_sessions  (cost=0.43..91374.87 rows=3998830 width=8) (actual time=0.027..198.306 rows=4000000 loops=1)
+              Buffers: shared hit=1257248 read=12908
+              ->  Index Only Scan using navigation_dest_started_idx on navigation_sessions  (cost=0.43..139393.70 rows=4000352 width=8) (actual time=0.028..210.933 rows=4000000 loops=1)
                     Heap Fetches: 38
-                    Buffers: shared hit=1562656 read=384
+                    Buffers: shared hit=1257248 read=12908
 Planning:
-  Buffers: shared hit=245 read=2
-Planning Time: 0.409 ms
-Execution Time: 465.942 ms
+  Buffers: shared hit=161 read=11
+Planning Time: 0.367 ms
+Execution Time: 467.541 ms
 === R17 run 3 ===
-Limit  (cost=133887.72..133887.77 rows=20 width=44) (actual time=463.827..463.829 rows=20 loops=1)
-  Buffers: shared hit=1563043
-  ->  Sort  (cost=133887.72..134310.13 rows=168961 width=44) (actual time=463.826..463.827 rows=20 loops=1)
+Limit  (cost=181499.85..181499.90 rows=20 width=44) (actual time=459.189..459.191 rows=20 loops=1)
+  Buffers: shared hit=1252748 read=17411
+  ->  Sort  (cost=181499.85..181908.15 rows=163319 width=44) (actual time=459.189..459.190 rows=20 loops=1)
         Sort Key: (round(avg(rerouted_count), 2)) DESC
         Sort Method: top-N heapsort  Memory: 27kB
-        Buffers: shared hit=1563043
-        ->  GroupAggregate  (cost=0.43..129391.73 rows=168961 width=44) (actual time=0.085..439.858 rows=369688 loops=1)
+        Buffers: shared hit=1252748 read=17411
+        ->  GroupAggregate  (cost=0.43..177153.99 rows=163319 width=44) (actual time=0.093..438.014 rows=369688 loops=1)
               Group Key: dest_place_id
               Filter: (count(*) >= 5)
               Rows Removed by Filter: 415437
-              Buffers: shared hit=1563040
-              ->  Index Only Scan using idx_nav_dest_reroutes on navigation_sessions  (cost=0.43..91374.87 rows=3998830 width=8) (actual time=0.027..195.861 rows=4000000 loops=1)
+              Buffers: shared hit=1252745 read=17411
+              ->  Index Only Scan using navigation_dest_started_idx on navigation_sessions  (cost=0.43..139393.70 rows=4000352 width=8) (actual time=0.025..209.289 rows=4000000 loops=1)
                     Heap Fetches: 38
-                    Buffers: shared hit=1563040
+                    Buffers: shared hit=1252745 read=17411
 Planning:
-  Buffers: shared hit=247
-Planning Time: 0.409 ms
-Execution Time: 463.852 ms
+  Buffers: shared hit=156 read=16
+Planning Time: 0.387 ms
+Execution Time: 459.216 ms

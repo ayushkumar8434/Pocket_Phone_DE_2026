@@ -1,78 +1,69 @@
 === R24 run 1 ===
-Gather  (cost=21790.35..45129.08 rows=1590 width=29) (actual time=60.211..62.392 rows=853 loops=1)
+Gather  (cost=4147.47..26773.69 rows=1656 width=29) (actual time=37.882..39.022 rows=853 loops=1)
   Workers Planned: 2
   Workers Launched: 2
-  Buffers: shared hit=13582 read=20459
-  ->  Parallel Hash Join  (cost=20790.35..43970.08 rows=662 width=29) (actual time=58.031..58.403 rows=284 loops=3)
-        Hash Cond: ((b.name)::text = (a.name)::text)
+  Buffers: shared hit=399 read=17776
+  ->  Parallel Hash Join  (cost=3147.47..25608.09 rows=690 width=29) (actual time=36.064..36.171 rows=284 loops=3)
+        Hash Cond: (b.name = a.name)
         Join Filter: ((b.place_id > a.place_id) AND (abs((b.latitude - a.latitude)) < 0.001) AND (abs((b.longitude - a.longitude)) < 0.001))
         Rows Removed by Join Filter: 14791
-        Buffers: shared hit=13582 read=20459
-        ->  Parallel Seq Scan on places b  (cost=0.00..21722.97 rows=333798 width=41) (actual time=0.006..11.740 rows=266951 loops=3)
-              Buffers: shared hit=13476 read=4909
-        ->  Parallel Hash  (cost=20567.48..20567.48 rows=17830 width=41) (actual time=27.688..27.688 rows=14507 loops=3)
+        Buffers: shared hit=399 read=17776
+        ->  Parallel Seq Scan on places b  (cost=0.00..20995.89 rows=333689 width=41) (actual time=0.017..11.861 rows=266951 loops=3)
+              Buffers: shared hit=289 read=17370
+        ->  Parallel Hash  (cost=2915.47..2915.47 rows=18560 width=41) (actual time=3.452..3.452 rows=14507 loops=3)
               Buckets: 65536  Batches: 1  Memory Usage: 3904kB
-              Buffers: shared hit=2 read=15550
-              ->  Parallel Bitmap Heap Scan on places a  (cost=1915.03..20567.48 rows=17830 width=41) (actual time=4.052..25.414 rows=14507 loops=3)
-                    Recheck Cond: ((city_id = 1) AND (category_id = 1))
-                    Heap Blocks: exact=5143
-                    Buffers: shared hit=2 read=15550
-                    ->  Bitmap Index Scan on idx_places_duplicate_check  (cost=0.00..1904.34 rows=42791 width=0) (actual time=4.376..4.378 rows=45317 loops=1)
-                          Index Cond: ((city_id = 1) AND (category_id = 1))
-                          Buffers: shared read=364
+              Buffers: shared hit=6 read=406
+              ->  Parallel Index Only Scan using places_city_category_name_idx on places a  (cost=0.42..2915.47 rows=18560 width=41) (actual time=0.060..1.789 rows=14507 loops=3)
+                    Index Cond: ((city_id = 1) AND (category_id = 1))
+                    Heap Fetches: 0
+                    Buffers: shared hit=6 read=406
 Planning:
-  Buffers: shared hit=450 read=2
-Planning Time: 0.447 ms
-Execution Time: 62.452 ms
+  Buffers: shared hit=508 read=1
+Planning Time: 0.610 ms
+Execution Time: 39.068 ms
 === R24 run 2 ===
-Gather  (cost=21790.35..45129.08 rows=1590 width=29) (actual time=47.208..49.280 rows=853 loops=1)
+Gather  (cost=4147.47..26773.69 rows=1656 width=29) (actual time=31.466..32.573 rows=853 loops=1)
   Workers Planned: 2
   Workers Launched: 2
-  Buffers: shared hit=23689 read=10352
-  ->  Parallel Hash Join  (cost=20790.35..43970.08 rows=662 width=29) (actual time=45.842..46.194 rows=284 loops=3)
-        Hash Cond: ((b.name)::text = (a.name)::text)
+  Buffers: shared hit=901 read=17274
+  ->  Parallel Hash Join  (cost=3147.47..25608.09 rows=690 width=29) (actual time=30.126..30.221 rows=284 loops=3)
+        Hash Cond: (b.name = a.name)
         Join Filter: ((b.place_id > a.place_id) AND (abs((b.latitude - a.latitude)) < 0.001) AND (abs((b.longitude - a.longitude)) < 0.001))
         Rows Removed by Join Filter: 14791
-        Buffers: shared hit=23689 read=10352
-        ->  Parallel Seq Scan on places b  (cost=0.00..21722.97 rows=333798 width=41) (actual time=0.004..10.983 rows=266951 loops=3)
-              Buffers: shared hit=15284 read=3101
-        ->  Parallel Hash  (cost=20567.48..20567.48 rows=17830 width=41) (actual time=17.518..17.518 rows=14507 loops=3)
+        Buffers: shared hit=901 read=17274
+        ->  Parallel Seq Scan on places b  (cost=0.00..20995.89 rows=333689 width=41) (actual time=0.020..10.348 rows=266951 loops=3)
+              Buffers: shared hit=385 read=17274
+        ->  Parallel Hash  (cost=2915.47..2915.47 rows=18560 width=41) (actual time=2.343..2.343 rows=14507 loops=3)
               Buckets: 65536  Batches: 1  Memory Usage: 3904kB
-              Buffers: shared hit=8301 read=7251
-              ->  Parallel Bitmap Heap Scan on places a  (cost=1915.03..20567.48 rows=17830 width=41) (actual time=2.590..15.978 rows=14507 loops=3)
-                    Recheck Cond: ((city_id = 1) AND (category_id = 1))
-                    Heap Blocks: exact=6055
-                    Buffers: shared hit=8301 read=7251
-                    ->  Bitmap Index Scan on idx_places_duplicate_check  (cost=0.00..1904.34 rows=42791 width=0) (actual time=2.756..2.756 rows=45317 loops=1)
-                          Index Cond: ((city_id = 1) AND (category_id = 1))
-                          Buffers: shared read=364
+              Buffers: shared hit=412
+              ->  Parallel Index Only Scan using places_city_category_name_idx on places a  (cost=0.42..2915.47 rows=18560 width=41) (actual time=0.024..1.106 rows=14507 loops=3)
+                    Index Cond: ((city_id = 1) AND (category_id = 1))
+                    Heap Fetches: 0
+                    Buffers: shared hit=412
 Planning:
-  Buffers: shared hit=451 read=1
-Planning Time: 0.471 ms
-Execution Time: 49.316 ms
+  Buffers: shared hit=509
+Planning Time: 0.606 ms
+Execution Time: 32.613 ms
 === R24 run 3 ===
-Gather  (cost=21790.35..45129.08 rows=1590 width=29) (actual time=41.108..43.314 rows=853 loops=1)
+Gather  (cost=4147.47..26773.69 rows=1656 width=29) (actual time=30.970..32.036 rows=853 loops=1)
   Workers Planned: 2
   Workers Launched: 2
-  Buffers: shared hit=31036 read=3005
-  ->  Parallel Hash Join  (cost=20790.35..43970.08 rows=662 width=29) (actual time=39.724..40.092 rows=284 loops=3)
-        Hash Cond: ((b.name)::text = (a.name)::text)
+  Buffers: shared hit=997 read=17178
+  ->  Parallel Hash Join  (cost=3147.47..25608.09 rows=690 width=29) (actual time=29.688..29.783 rows=284 loops=3)
+        Hash Cond: (b.name = a.name)
         Join Filter: ((b.place_id > a.place_id) AND (abs((b.latitude - a.latitude)) < 0.001) AND (abs((b.longitude - a.longitude)) < 0.001))
         Rows Removed by Join Filter: 14791
-        Buffers: shared hit=31036 read=3005
-        ->  Parallel Seq Scan on places b  (cost=0.00..21722.97 rows=333798 width=41) (actual time=0.003..11.237 rows=266951 loops=3)
-              Buffers: shared hit=15380 read=3005
-        ->  Parallel Hash  (cost=20567.48..20567.48 rows=17830 width=41) (actual time=10.840..10.841 rows=14507 loops=3)
+        Buffers: shared hit=997 read=17178
+        ->  Parallel Seq Scan on places b  (cost=0.00..20995.89 rows=333689 width=41) (actual time=0.016..10.180 rows=266951 loops=3)
+              Buffers: shared hit=481 read=17178
+        ->  Parallel Hash  (cost=2915.47..2915.47 rows=18560 width=41) (actual time=2.289..2.289 rows=14507 loops=3)
               Buckets: 65536  Batches: 1  Memory Usage: 3904kB
-              Buffers: shared hit=15552
-              ->  Parallel Bitmap Heap Scan on places a  (cost=1915.03..20567.48 rows=17830 width=41) (actual time=2.136..9.446 rows=14507 loops=3)
-                    Recheck Cond: ((city_id = 1) AND (category_id = 1))
-                    Heap Blocks: exact=5116
-                    Buffers: shared hit=15552
-                    ->  Bitmap Index Scan on idx_places_duplicate_check  (cost=0.00..1904.34 rows=42791 width=0) (actual time=2.266..2.266 rows=45317 loops=1)
-                          Index Cond: ((city_id = 1) AND (category_id = 1))
-                          Buffers: shared hit=364
+              Buffers: shared hit=412
+              ->  Parallel Index Only Scan using places_city_category_name_idx on places a  (cost=0.42..2915.47 rows=18560 width=41) (actual time=0.022..1.092 rows=14507 loops=3)
+                    Index Cond: ((city_id = 1) AND (category_id = 1))
+                    Heap Fetches: 0
+                    Buffers: shared hit=412
 Planning:
-  Buffers: shared hit=452
-Planning Time: 0.481 ms
-Execution Time: 43.350 ms
+  Buffers: shared hit=509
+Planning Time: 0.601 ms
+Execution Time: 32.071 ms

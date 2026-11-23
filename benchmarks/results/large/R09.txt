@@ -1,48 +1,48 @@
 === R09 run 1 ===
-GroupAggregate  (cost=11.35..14.81 rows=126 width=72) (actual time=0.175..0.214 rows=24 loops=1)
+GroupAggregate  (cost=15.35..18.81 rows=126 width=72) (actual time=0.212..0.243 rows=24 loops=1)
   Group Key: (EXTRACT(hour FROM recorded_at))
   Buffers: shared hit=8
-  ->  Sort  (cost=11.35..11.66 rows=126 width=38) (actual time=0.165..0.171 rows=111 loops=1)
+  ->  Sort  (cost=15.35..15.66 rows=126 width=38) (actual time=0.199..0.203 rows=111 loops=1)
         Sort Key: (EXTRACT(hour FROM recorded_at))
         Sort Method: quicksort  Memory: 28kB
         Buffers: shared hit=8
-        ->  Index Only Scan using idx_traffic_segment_time on traffic_readings  (cost=0.43..6.95 rows=126 width=38) (actual time=0.087..0.122 rows=111 loops=1)
+        ->  Index Only Scan using traffic_segment_newest_idx on traffic_readings  (cost=0.43..10.95 rows=126 width=38) (actual time=0.126..0.153 rows=111 loops=1)
               Index Cond: (segment_id = 5)
               Heap Fetches: 0
               Buffers: shared hit=5
 Planning:
-  Buffers: shared hit=186 read=3
-Planning Time: 0.991 ms
-Execution Time: 0.283 ms
+  Buffers: shared hit=163 read=2
+Planning Time: 0.609 ms
+Execution Time: 0.314 ms
 === R09 run 2 ===
-GroupAggregate  (cost=11.35..14.81 rows=126 width=72) (actual time=0.240..0.283 rows=24 loops=1)
+GroupAggregate  (cost=15.35..18.81 rows=126 width=72) (actual time=0.229..0.275 rows=24 loops=1)
   Group Key: (EXTRACT(hour FROM recorded_at))
   Buffers: shared hit=8
-  ->  Sort  (cost=11.35..11.66 rows=126 width=38) (actual time=0.224..0.229 rows=111 loops=1)
+  ->  Sort  (cost=15.35..15.66 rows=126 width=38) (actual time=0.213..0.220 rows=111 loops=1)
         Sort Key: (EXTRACT(hour FROM recorded_at))
         Sort Method: quicksort  Memory: 28kB
         Buffers: shared hit=8
-        ->  Index Only Scan using idx_traffic_segment_time on traffic_readings  (cost=0.43..6.95 rows=126 width=38) (actual time=0.137..0.172 rows=111 loops=1)
+        ->  Index Only Scan using traffic_segment_newest_idx on traffic_readings  (cost=0.43..10.95 rows=126 width=38) (actual time=0.119..0.160 rows=111 loops=1)
               Index Cond: (segment_id = 5)
               Heap Fetches: 0
               Buffers: shared hit=5
 Planning:
-  Buffers: shared hit=189
-Planning Time: 1.003 ms
-Execution Time: 0.380 ms
+  Buffers: shared hit=165
+Planning Time: 0.855 ms
+Execution Time: 0.348 ms
 === R09 run 3 ===
-GroupAggregate  (cost=11.35..14.81 rows=126 width=72) (actual time=0.273..0.307 rows=24 loops=1)
+GroupAggregate  (cost=15.35..18.81 rows=126 width=72) (actual time=0.228..0.267 rows=24 loops=1)
   Group Key: (EXTRACT(hour FROM recorded_at))
   Buffers: shared hit=8
-  ->  Sort  (cost=11.35..11.66 rows=126 width=38) (actual time=0.249..0.254 rows=111 loops=1)
+  ->  Sort  (cost=15.35..15.66 rows=126 width=38) (actual time=0.212..0.218 rows=111 loops=1)
         Sort Key: (EXTRACT(hour FROM recorded_at))
         Sort Method: quicksort  Memory: 28kB
         Buffers: shared hit=8
-        ->  Index Only Scan using idx_traffic_segment_time on traffic_readings  (cost=0.43..6.95 rows=126 width=38) (actual time=0.160..0.197 rows=111 loops=1)
+        ->  Index Only Scan using traffic_segment_newest_idx on traffic_readings  (cost=0.43..10.95 rows=126 width=38) (actual time=0.122..0.160 rows=111 loops=1)
               Index Cond: (segment_id = 5)
               Heap Fetches: 0
               Buffers: shared hit=5
 Planning:
-  Buffers: shared hit=189
-Planning Time: 0.983 ms
-Execution Time: 0.414 ms
+  Buffers: shared hit=165
+Planning Time: 0.849 ms
+Execution Time: 0.343 ms

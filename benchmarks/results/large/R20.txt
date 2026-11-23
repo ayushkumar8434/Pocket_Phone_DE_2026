@@ -1,54 +1,54 @@
 === R20 run 1 ===
-WindowAgg  (cost=30685.13..38527.44 rows=225192 width=44) (actual time=24.604..33.890 rows=30 loops=1)
+WindowAgg  (cost=30119.40..37824.09 rows=221240 width=44) (actual time=25.320..34.736 rows=30 loops=1)
   Buffers: shared hit=7 read=601, temp read=324 written=325
-  ->  GroupAggregate  (cost=30645.72..35149.56 rows=225192 width=12) (actual time=24.269..33.872 rows=30 loops=1)
+  ->  GroupAggregate  (cost=30080.69..34505.49 rows=221240 width=12) (actual time=24.995..34.719 rows=30 loops=1)
         Group Key: ((navigation_sessions.started_at)::date)
         Buffers: shared hit=7 read=601, temp read=324 written=325
-        ->  Sort  (cost=30645.72..31208.70 rows=225192 width=4) (actual time=23.938..28.858 rows=219780 loops=1)
+        ->  Sort  (cost=30080.69..30633.79 rows=221240 width=4) (actual time=24.671..29.971 rows=219780 loops=1)
               Sort Key: ((navigation_sessions.started_at)::date)
               Sort Method: external merge  Disk: 2592kB
               Buffers: shared hit=7 read=601, temp read=324 written=325
-              ->  Index Only Scan using idx_nav_started_date on navigation_sessions  (cost=0.43..7545.25 rows=225192 width=4) (actual time=0.011..15.490 rows=219780 loops=1)
+              ->  Index Only Scan using navigation_started_at_idx on navigation_sessions  (cost=0.43..7412.33 rows=221240 width=4) (actual time=0.014..15.951 rows=219780 loops=1)
                     Index Cond: ((started_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
                     Heap Fetches: 38
                     Buffers: shared hit=4 read=601
 Planning:
-  Buffers: shared hit=225 read=43
-Planning Time: 0.618 ms
-Execution Time: 34.680 ms
+  Buffers: shared hit=176 read=3
+Planning Time: 0.326 ms
+Execution Time: 35.348 ms
 === R20 run 2 ===
-WindowAgg  (cost=30685.13..38527.44 rows=225192 width=44) (actual time=23.900..33.135 rows=30 loops=1)
+WindowAgg  (cost=30119.40..37824.09 rows=221240 width=44) (actual time=23.038..32.237 rows=30 loops=1)
   Buffers: shared hit=608, temp read=324 written=325
-  ->  GroupAggregate  (cost=30645.72..35149.56 rows=225192 width=12) (actual time=23.565..33.117 rows=30 loops=1)
+  ->  GroupAggregate  (cost=30080.69..34505.49 rows=221240 width=12) (actual time=22.704..32.221 rows=30 loops=1)
         Group Key: ((navigation_sessions.started_at)::date)
         Buffers: shared hit=608, temp read=324 written=325
-        ->  Sort  (cost=30645.72..31208.70 rows=225192 width=4) (actual time=23.232..28.147 rows=219780 loops=1)
+        ->  Sort  (cost=30080.69..30633.79 rows=221240 width=4) (actual time=22.393..27.276 rows=219780 loops=1)
               Sort Key: ((navigation_sessions.started_at)::date)
               Sort Method: external merge  Disk: 2592kB
               Buffers: shared hit=608, temp read=324 written=325
-              ->  Index Only Scan using idx_nav_started_date on navigation_sessions  (cost=0.43..7545.25 rows=225192 width=4) (actual time=0.008..14.999 rows=219780 loops=1)
+              ->  Index Only Scan using navigation_started_at_idx on navigation_sessions  (cost=0.43..7412.33 rows=221240 width=4) (actual time=0.010..14.500 rows=219780 loops=1)
                     Index Cond: ((started_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
                     Heap Fetches: 38
                     Buffers: shared hit=605
 Planning:
-  Buffers: shared hit=268
-Planning Time: 0.408 ms
-Execution Time: 33.724 ms
+  Buffers: shared hit=179
+Planning Time: 0.298 ms
+Execution Time: 32.779 ms
 === R20 run 3 ===
-WindowAgg  (cost=30685.13..38527.44 rows=225192 width=44) (actual time=24.134..33.477 rows=30 loops=1)
+WindowAgg  (cost=30119.40..37824.09 rows=221240 width=44) (actual time=23.499..32.920 rows=30 loops=1)
   Buffers: shared hit=608, temp read=324 written=325
-  ->  GroupAggregate  (cost=30645.72..35149.56 rows=225192 width=12) (actual time=23.774..33.459 rows=30 loops=1)
+  ->  GroupAggregate  (cost=30080.69..34505.49 rows=221240 width=12) (actual time=23.166..32.903 rows=30 loops=1)
         Group Key: ((navigation_sessions.started_at)::date)
         Buffers: shared hit=608, temp read=324 written=325
-        ->  Sort  (cost=30645.72..31208.70 rows=225192 width=4) (actual time=23.421..28.463 rows=219780 loops=1)
+        ->  Sort  (cost=30080.69..30633.79 rows=221240 width=4) (actual time=22.833..28.093 rows=219780 loops=1)
               Sort Key: ((navigation_sessions.started_at)::date)
               Sort Method: external merge  Disk: 2592kB
               Buffers: shared hit=608, temp read=324 written=325
-              ->  Index Only Scan using idx_nav_started_date on navigation_sessions  (cost=0.43..7545.25 rows=225192 width=4) (actual time=0.010..15.028 rows=219780 loops=1)
+              ->  Index Only Scan using navigation_started_at_idx on navigation_sessions  (cost=0.43..7412.33 rows=221240 width=4) (actual time=0.010..14.533 rows=219780 loops=1)
                     Index Cond: ((started_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (started_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
                     Heap Fetches: 38
                     Buffers: shared hit=605
 Planning:
-  Buffers: shared hit=268
-Planning Time: 0.414 ms
-Execution Time: 34.037 ms
+  Buffers: shared hit=179
+Planning Time: 0.325 ms
+Execution Time: 33.484 ms

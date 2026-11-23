@@ -1,39 +1,39 @@
 === R13 run 1 ===
-Merge Anti Join  (cost=0.84..43274.76 rows=676863 width=25) (actual time=0.034..115.847 rows=666854 loops=1)
+Merge Anti Join  (cost=0.84..42439.31 rows=684398 width=25) (actual time=0.051..113.262 rows=666854 loops=1)
   Merge Cond: (p.place_id = n.origin_place_id)
-  Buffers: shared hit=97379 read=20216 dirtied=2186 written=109
-  ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=25) (actual time=0.003..65.279 rows=800853 loops=1)
-        Buffers: shared hit=24557 read=19817 dirtied=2186 written=106
-  ->  Index Only Scan using idx_nav_origin_place on navigation_sessions n  (cost=0.42..4099.74 rows=3998830 width=4) (actual time=0.029..9.420 rows=148323 loops=1)
+  Buffers: shared hit=74000 read=19634 written=1091
+  ->  Index Scan using places_pkey on places p  (cost=0.42..38481.13 rows=800853 width=25) (actual time=0.004..64.788 rows=800853 loops=1)
+        Buffers: shared hit=1178 read=19235 written=1063
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.42..3970.61 rows=4000352 width=4) (actual time=0.046..8.668 rows=148323 loops=1)
         Heap Fetches: 1
-        Buffers: shared hit=72822 read=399 written=3
+        Buffers: shared hit=72822 read=399 written=28
 Planning:
-  Buffers: shared hit=440 read=1
-Planning Time: 0.663 ms
-Execution Time: 127.559 ms
+  Buffers: shared hit=442
+Planning Time: 0.627 ms
+Execution Time: 124.563 ms
 === R13 run 2 ===
-Merge Anti Join  (cost=0.84..43274.76 rows=676863 width=25) (actual time=0.032..113.230 rows=666854 loops=1)
+Merge Anti Join  (cost=0.84..42439.31 rows=684398 width=25) (actual time=0.036..114.254 rows=666854 loops=1)
   Merge Cond: (p.place_id = n.origin_place_id)
-  Buffers: shared hit=76159 read=17475 written=1097
-  ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=25) (actual time=0.003..63.269 rows=800853 loops=1)
-        Buffers: shared hit=3337 read=17076 written=1071
-  ->  Index Only Scan using idx_nav_origin_place on navigation_sessions n  (cost=0.42..4099.74 rows=3998830 width=4) (actual time=0.028..8.784 rows=148323 loops=1)
+  Buffers: shared hit=74016 read=19618 written=8
+  ->  Index Scan using places_pkey on places p  (cost=0.42..38481.13 rows=800853 width=25) (actual time=0.009..64.767 rows=800853 loops=1)
+        Buffers: shared hit=1194 read=19219 written=7
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.42..3970.61 rows=4000352 width=4) (actual time=0.027..8.934 rows=148323 loops=1)
         Heap Fetches: 1
-        Buffers: shared hit=72822 read=399 written=26
+        Buffers: shared hit=72822 read=399 written=1
 Planning:
-  Buffers: shared hit=440 read=1
-Planning Time: 0.639 ms
-Execution Time: 124.981 ms
+  Buffers: shared hit=442
+Planning Time: 0.596 ms
+Execution Time: 125.559 ms
 === R13 run 3 ===
-Merge Anti Join  (cost=0.84..43274.76 rows=676863 width=25) (actual time=0.032..114.918 rows=666854 loops=1)
+Merge Anti Join  (cost=0.84..42439.31 rows=684398 width=25) (actual time=0.032..107.984 rows=666854 loops=1)
   Merge Cond: (p.place_id = n.origin_place_id)
-  Buffers: shared hit=73402 read=20232 written=1074
-  ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=25) (actual time=0.003..64.967 rows=800853 loops=1)
-        Buffers: shared hit=580 read=19833 written=1059
-  ->  Index Only Scan using idx_nav_origin_place on navigation_sessions n  (cost=0.42..4099.74 rows=3998830 width=4) (actual time=0.028..9.204 rows=148323 loops=1)
+  Buffers: shared hit=73642 read=19992
+  ->  Index Scan using places_pkey on places p  (cost=0.42..38481.13 rows=800853 width=25) (actual time=0.005..59.445 rows=800853 loops=1)
+        Buffers: shared hit=820 read=19593
+  ->  Index Only Scan using navigation_known_origin_idx on navigation_sessions n  (cost=0.42..3970.61 rows=4000352 width=4) (actual time=0.026..8.731 rows=148323 loops=1)
         Heap Fetches: 1
-        Buffers: shared hit=72822 read=399 written=15
+        Buffers: shared hit=72822 read=399
 Planning:
-  Buffers: shared hit=440 read=1
-Planning Time: 0.655 ms
-Execution Time: 126.579 ms
+  Buffers: shared hit=441 read=1
+Planning Time: 0.615 ms
+Execution Time: 119.238 ms
