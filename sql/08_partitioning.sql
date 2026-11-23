@@ -61,6 +61,9 @@ CREATE TABLE IF NOT EXISTS traffic_readings_partitioned (
     recorded_at TIMESTAMPTZ NOT NULL,
     avg_speed_kmph NUMERIC(5, 1) NOT NULL,
     congestion_level VARCHAR(20) NOT NULL,
+    -- PRIMARY KEY RULE: on a partitioned table every PRIMARY KEY / UNIQUE constraint
+    -- must include the partition column, so the key is (reading_id, recorded_at).
+    CONSTRAINT traffic_part_pkey PRIMARY KEY (reading_id, recorded_at),
     CONSTRAINT traffic_part_fk_segment FOREIGN KEY (segment_id) 
         REFERENCES road_segments(segment_id) ON DELETE CASCADE,
     CONSTRAINT traffic_part_speed_nonneg CHECK (avg_speed_kmph >= 0),
@@ -152,6 +155,8 @@ CREATE TABLE IF NOT EXISTS navigation_sessions_partitioned (
     actual_minutes INTEGER,
     rerouted_count INTEGER NOT NULL DEFAULT 0,
     status VARCHAR(20) NOT NULL,
+    -- PRIMARY KEY RULE: the partition column started_at must be part of the key.
+    CONSTRAINT nav_part_pkey PRIMARY KEY (session_id, started_at),
     CONSTRAINT nav_part_fk_user FOREIGN KEY (user_id) 
         REFERENCES users(user_id) ON DELETE SET NULL,
     CONSTRAINT nav_part_fk_origin_place FOREIGN KEY (origin_place_id) 
@@ -202,6 +207,8 @@ CREATE TABLE navigation_sessions_2027_q1 PARTITION OF navigation_sessions_partit
 CREATE TABLE navigation_sessions_default PARTITION OF navigation_sessions_partitioned DEFAULT;
 
 -- Create indexes on partitioned table
+-- Plain started_at index: date-range queries need it inside each partition (pruning only picks the partitions)
+CREATE INDEX idx_nav_part_started_at ON navigation_sessions_partitioned (started_at);
 CREATE INDEX idx_nav_part_status_time ON navigation_sessions_partitioned (status, started_at);
 CREATE INDEX idx_nav_part_dest_date ON navigation_sessions_partitioned (dest_place_id, started_at);
 CREATE INDEX idx_nav_part_origin_place ON navigation_sessions_partitioned (origin_place_id) 
@@ -210,7 +217,7 @@ CREATE INDEX idx_nav_part_mode_status ON navigation_sessions_partitioned (travel
 CREATE INDEX idx_nav_part_dest_reroutes ON navigation_sessions_partitioned (dest_place_id, rerouted_count);
 
 -- =====================================================================
--- STEP 4: PARTITION INCIDENT_REPORTS BY MONTH
+-- STEP 4: PARTITION INCIDENT_REPORTS BY YEAR
 -- =====================================================================
 
 \echo 'Setting up partitioned incident_reports...'
@@ -223,18 +230,19 @@ CREATE TABLE IF NOT EXISTS incident_reports_partitioned (
     reported_at TIMESTAMPTZ NOT NULL,
     expires_at TIMESTAMPTZ NOT NULL,
     upvotes INTEGER NOT NULL DEFAULT 0,
+    CONSTRAINT incidents_part_pkey PRIMARY KEY (report_id, reported_at),
     CONSTRAINT incidents_part_fk_segment FOREIGN KEY (segment_id) 
         REFERENCES road_segments(segment_id) ON DELETE CASCADE,
     CONSTRAINT incidents_part_fk_user FOREIGN KEY (user_id) 
         REFERENCES users(user_id) ON DELETE CASCADE,
     CONSTRAINT incidents_part_type_valid CHECK (
-        incident_type IN ('ACCIDENT', 'ROADWORK', 'POLICE', 'HAZARD', 'CLOSURE', 'JAM')
+        incident_type IN ('ACCIDENT', 'ROADWORK', 'POLICE', 'CLOSURE', 'BREAKDOWN', 'WATERLOGGING')
     ),
     CONSTRAINT incidents_part_upvotes_nonneg CHECK (upvotes >= 0),
     CONSTRAINT incidents_part_expires_after CHECK (expires_at > reported_at)
 ) PARTITION BY RANGE (reported_at);
 
--- Create monthly partitions for 2025-2027
+-- Create yearly partitions for 2025-2027
 CREATE TABLE incident_reports_2025 PARTITION OF incident_reports_partitioned
     FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');
 CREATE TABLE incident_reports_2026 PARTITION OF incident_reports_partitioned
@@ -262,13 +270,17 @@ CREATE TABLE IF NOT EXISTS place_reviews_partitioned (
     review_text TEXT,
     photo_count INTEGER NOT NULL DEFAULT 0,
     created_at TIMESTAMPTZ NOT NULL,
+    CONSTRAINT reviews_part_pkey PRIMARY KEY (review_id, created_at),
     CONSTRAINT reviews_part_fk_place FOREIGN KEY (place_id) 
         REFERENCES places(place_id) ON DELETE CASCADE,
     CONSTRAINT reviews_part_fk_user FOREIGN KEY (user_id) 
         REFERENCES users(user_id) ON DELETE CASCADE,
     CONSTRAINT reviews_part_rating_valid CHECK (rating BETWEEN 1 AND 5),
     CONSTRAINT reviews_part_photo_count_nonneg CHECK (photo_count >= 0),
-    UNIQUE (place_id, user_id)
+    -- UNIQUE (place_id, user_id) is not allowed here because it does not include created_at.
+    -- The same rule applies to the key: one review per (place, user) must be enforced by the
+    -- application or by a trigger once the table is partitioned.
+    CONSTRAINT reviews_part_unique UNIQUE (place_id, user_id, created_at)
 ) PARTITION BY RANGE (created_at);
 
 -- Create yearly partitions

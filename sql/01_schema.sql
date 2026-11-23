@@ -152,7 +152,7 @@ CREATE TABLE saved_places (
     CONSTRAINT saved_fk_place FOREIGN KEY (place_id) 
         REFERENCES places(place_id) ON DELETE CASCADE,
     CONSTRAINT saved_list_name_valid CHECK (
-        list_name IN ('Starred', 'Want to go', 'Favorites', 'Visited')
+        list_name IN ('Starred', 'Want to go', 'Favourites', 'Travel plans')
     )
 );
 
@@ -189,7 +189,7 @@ CREATE TABLE incident_reports (
     CONSTRAINT incidents_fk_user FOREIGN KEY (user_id) 
         REFERENCES users(user_id) ON DELETE CASCADE,
     CONSTRAINT incidents_type_valid CHECK (
-        incident_type IN ('ACCIDENT', 'ROADWORK', 'POLICE', 'HAZARD', 'CLOSURE', 'JAM')
+        incident_type IN ('ACCIDENT', 'ROADWORK', 'POLICE', 'CLOSURE', 'BREAKDOWN', 'WATERLOGGING')
     ),
     CONSTRAINT incidents_upvotes_nonneg CHECK (upvotes >= 0),
     CONSTRAINT incidents_expires_after_reported CHECK (expires_at > reported_at)

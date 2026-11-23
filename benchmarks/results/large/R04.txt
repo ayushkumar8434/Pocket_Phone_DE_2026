@@ -1,0 +1,72 @@
+=== R04 run 1 ===
+Limit  (cost=1.29..615.82 rows=30 width=46) (actual time=0.344..2.927 rows=30 loops=1)
+  Buffers: shared hit=795 read=1009 dirtied=387
+  ->  Nested Loop  (cost=1.29..269881.48 rows=13175 width=46) (actual time=0.343..2.925 rows=30 loops=1)
+        Buffers: shared hit=795 read=1009 dirtied=387
+        ->  Nested Loop  (cost=0.86..253566.29 rows=14939 width=34) (actual time=0.340..2.896 rows=30 loops=1)
+              Buffers: shared hit=675 read=1009 dirtied=387
+              ->  Index Scan using idx_places_city_rating on places p  (cost=0.42..77534.39 rows=41557 width=30) (actual time=0.048..1.548 rows=240 loops=1)
+                    Index Cond: (city_id = 1)
+                    Filter: (category_id = 1)
+                    Rows Removed by Filter: 475
+                    Buffers: shared hit=240 read=484 dirtied=387
+              ->  Index Scan using opening_hours_pkey on opening_hours h_1  (cost=0.43..4.24 rows=1 width=4) (actual time=0.006..0.006 rows=0 loops=240)
+                    Index Cond: ((place_id = p.place_id) AND (weekday = 6))
+                    Filter: (((opens < closes) AND ('23:30:00'::time without time zone >= opens) AND ('23:30:00'::time without time zone <= closes)) OR ((opens > closes) AND (('23:30:00'::time without time zone >= opens) OR ('23:30:00'::time without time zone < closes))))
+                    Rows Removed by Filter: 1
+                    Buffers: shared hit=435 read=525
+        ->  Index Scan using opening_hours_pkey on opening_hours h  (cost=0.43..1.09 rows=1 width=20) (actual time=0.001..0.001 rows=1 loops=30)
+              Index Cond: ((place_id = h_1.place_id) AND (weekday = 6))
+              Buffers: shared hit=120
+Planning:
+  Buffers: shared hit=414 read=4
+Planning Time: 0.776 ms
+Execution Time: 2.947 ms
+=== R04 run 2 ===
+Limit  (cost=1.29..615.82 rows=30 width=46) (actual time=0.189..1.533 rows=30 loops=1)
+  Buffers: shared hit=1794
+  ->  Nested Loop  (cost=1.29..269881.48 rows=13175 width=46) (actual time=0.189..1.531 rows=30 loops=1)
+        Buffers: shared hit=1794
+        ->  Nested Loop  (cost=0.86..253566.29 rows=14939 width=34) (actual time=0.186..1.507 rows=30 loops=1)
+              Buffers: shared hit=1674
+              ->  Index Scan using idx_places_city_rating on places p  (cost=0.42..77534.39 rows=41557 width=30) (actual time=0.029..0.756 rows=240 loops=1)
+                    Index Cond: (city_id = 1)
+                    Filter: (category_id = 1)
+                    Rows Removed by Filter: 475
+                    Buffers: shared hit=714
+              ->  Index Scan using opening_hours_pkey on opening_hours h_1  (cost=0.43..4.24 rows=1 width=4) (actual time=0.003..0.003 rows=0 loops=240)
+                    Index Cond: ((place_id = p.place_id) AND (weekday = 6))
+                    Filter: (((opens < closes) AND ('23:30:00'::time without time zone >= opens) AND ('23:30:00'::time without time zone <= closes)) OR ((opens > closes) AND (('23:30:00'::time without time zone >= opens) OR ('23:30:00'::time without time zone < closes))))
+                    Rows Removed by Filter: 1
+                    Buffers: shared hit=960
+        ->  Index Scan using opening_hours_pkey on opening_hours h  (cost=0.43..1.09 rows=1 width=20) (actual time=0.001..0.001 rows=1 loops=30)
+              Index Cond: ((place_id = h_1.place_id) AND (weekday = 6))
+              Buffers: shared hit=120
+Planning:
+  Buffers: shared hit=418
+Planning Time: 0.737 ms
+Execution Time: 1.552 ms
+=== R04 run 3 ===
+Limit  (cost=1.29..615.82 rows=30 width=46) (actual time=0.191..1.587 rows=30 loops=1)
+  Buffers: shared hit=1794
+  ->  Nested Loop  (cost=1.29..269881.48 rows=13175 width=46) (actual time=0.191..1.586 rows=30 loops=1)
+        Buffers: shared hit=1794
+        ->  Nested Loop  (cost=0.86..253566.29 rows=14939 width=34) (actual time=0.188..1.561 rows=30 loops=1)
+              Buffers: shared hit=1674
+              ->  Index Scan using idx_places_city_rating on places p  (cost=0.42..77534.39 rows=41557 width=30) (actual time=0.030..0.781 rows=240 loops=1)
+                    Index Cond: (city_id = 1)
+                    Filter: (category_id = 1)
+                    Rows Removed by Filter: 475
+                    Buffers: shared hit=714
+              ->  Index Scan using opening_hours_pkey on opening_hours h_1  (cost=0.43..4.24 rows=1 width=4) (actual time=0.003..0.003 rows=0 loops=240)
+                    Index Cond: ((place_id = p.place_id) AND (weekday = 6))
+                    Filter: (((opens < closes) AND ('23:30:00'::time without time zone >= opens) AND ('23:30:00'::time without time zone <= closes)) OR ((opens > closes) AND (('23:30:00'::time without time zone >= opens) OR ('23:30:00'::time without time zone < closes))))
+                    Rows Removed by Filter: 1
+                    Buffers: shared hit=960
+        ->  Index Scan using opening_hours_pkey on opening_hours h  (cost=0.43..1.09 rows=1 width=20) (actual time=0.001..0.001 rows=1 loops=30)
+              Index Cond: ((place_id = h_1.place_id) AND (weekday = 6))
+              Buffers: shared hit=120
+Planning:
+  Buffers: shared hit=418
+Planning Time: 0.711 ms
+Execution Time: 1.607 ms

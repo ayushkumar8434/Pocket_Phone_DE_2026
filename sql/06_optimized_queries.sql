@@ -82,13 +82,19 @@ ORDER BY s.list_name, s.saved_at DESC;
 
 -- @R07_OPT
 -- Latest traffic reading per segment
--- OPTIMIZATION: idx_traffic_segment_time for DISTINCT ON optimization
-SELECT DISTINCT ON (t.segment_id) t.segment_id, s.road_name, t.recorded_at, t.avg_speed_kmph, t.congestion_level
-FROM traffic_readings t
-JOIN road_segments s ON s.segment_id = t.segment_id
+-- OPTIMIZATION: LATERAL + idx_traffic_segment_time (covering index). One index-only
+-- lookup per segment replaces a scan of ~100,000 readings plus a sort for DISTINCT ON.
+SELECT s.segment_id, s.road_name, t.recorded_at, t.avg_speed_kmph, t.congestion_level
+FROM road_segments s
+CROSS JOIN LATERAL (
+    SELECT recorded_at, avg_speed_kmph, congestion_level
+    FROM traffic_readings
+    WHERE segment_id = s.segment_id
+    ORDER BY recorded_at DESC
+    LIMIT 1
+) t
 WHERE s.city_id = 1 AND s.road_name LIKE 'Outer Ring Road%'
-ORDER BY t.segment_id, t.recorded_at DESC;
-
+ORDER BY s.segment_id;
 -- @R08_OPT
 -- Traffic alerts: heavy traffic segments
 -- OPTIMIZATION: idx_traffic_congestion_time + idx_segments_city_road
@@ -111,12 +117,13 @@ ORDER BY 1;
 
 -- @R10_OPT
 -- Incident layer for a city on a date
--- OPTIMIZATION: idx_incidents_segment_date + idx_segments_city_road
+-- OPTIMIZATION: range predicate on reported_at (DATE(reported_at) = ... cannot use an
+-- index) + idx_incidents_reported_at + idx_segments_city_road
 SELECT i.report_id, i.incident_type, s.road_name, i.reported_at, i.expires_at, i.upvotes
 FROM incident_reports i
 JOIN road_segments s ON s.segment_id = i.segment_id
 WHERE s.city_id = 1
-  AND DATE(i.reported_at) = '2026-06-30'
+  AND i.reported_at >= DATE '2026-06-30' AND i.reported_at < DATE '2026-06-30' + 1
 ORDER BY i.reported_at DESC;
 
 -- @R11_OPT

@@ -1,0 +1,27 @@
+=== R22 run 1 ===
+Limit  (cost=1749.32..1750.19 rows=25 width=24) (actual time=6.062..6.065 rows=25 loops=1)
+  Buffers: shared hit=8 read=596
+  ->  Index Scan using idx_reviews_created_at on place_reviews  (cost=0.43..62960.22 rows=1799990 width=24) (actual time=0.013..5.075 rows=50025 loops=1)
+        Buffers: shared hit=8 read=596
+Planning:
+  Buffers: shared hit=138 read=8
+Planning Time: 0.336 ms
+Execution Time: 6.073 ms
+=== R22 run 2 ===
+Limit  (cost=1749.32..1750.19 rows=25 width=24) (actual time=5.573..5.576 rows=25 loops=1)
+  Buffers: shared hit=604
+  ->  Index Scan using idx_reviews_created_at on place_reviews  (cost=0.43..62960.22 rows=1799990 width=24) (actual time=0.007..4.557 rows=50025 loops=1)
+        Buffers: shared hit=604
+Planning:
+  Buffers: shared hit=146
+Planning Time: 0.307 ms
+Execution Time: 5.585 ms
+=== R22 run 3 ===
+Limit  (cost=1749.32..1750.19 rows=25 width=24) (actual time=5.807..5.811 rows=25 loops=1)
+  Buffers: shared hit=604
+  ->  Index Scan using idx_reviews_created_at on place_reviews  (cost=0.43..62960.22 rows=1799990 width=24) (actual time=0.007..4.728 rows=50025 loops=1)
+        Buffers: shared hit=604
+Planning:
+  Buffers: shared hit=146
+Planning Time: 0.282 ms
+Execution Time: 5.818 ms

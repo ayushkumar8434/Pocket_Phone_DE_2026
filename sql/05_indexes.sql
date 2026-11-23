@@ -3,7 +3,9 @@
 -- Phase 4: Create indexes to optimize the 30 queries
 -- =====================================================================
 
-SET search_path TO gmaps;
+-- pg_trgm provides gin_trgm_ops for the ILIKE '%text%' index below
+CREATE EXTENSION IF NOT EXISTS pg_trgm SCHEMA public;
+SET search_path TO gmaps, public;
 
 \echo '===== CREATING PERFORMANCE INDEXES ====='
 \echo ''
@@ -110,8 +112,11 @@ CREATE INDEX idx_segments_road_type ON road_segments (road_type);
 
 \echo 'Creating indexes for traffic_readings table...'
 
--- R07: Latest reading per segment (DISTINCT ON)
-CREATE INDEX idx_traffic_segment_time ON traffic_readings (segment_id, recorded_at DESC);
+-- R07: Latest reading per segment (one LATERAL index lookup per segment).
+-- The INCLUDE columns make it an index-only scan (no table access) once the
+-- table has been vacuumed. Found at scale: without this, R07 took ~125 ms.
+CREATE INDEX idx_traffic_segment_time ON traffic_readings (segment_id, recorded_at DESC)
+    INCLUDE (avg_speed_kmph, congestion_level);
 
 -- R08: Filter by congestion level and time
 CREATE INDEX idx_traffic_congestion_time ON traffic_readings (congestion_level, recorded_at DESC);
@@ -133,6 +138,10 @@ CREATE INDEX idx_incidents_segment_date ON incident_reports (segment_id, reporte
 
 -- W05: Delete expired incidents
 CREATE INDEX idx_incidents_expires ON incident_reports (expires_at);
+
+-- R10: incidents for one day. Found at scale: without this index the query
+-- scans all 240,000 incident rows (~13 ms) instead of reading the day's rows.
+CREATE INDEX idx_incidents_reported_at ON incident_reports (reported_at DESC);
 
 -- =====================================================================
 -- INDEXES FOR NAVIGATION_SESSIONS TABLE (R11, R12, R13, R16, R17, R18, R19, R20, W01)
@@ -166,7 +175,8 @@ CREATE INDEX idx_nav_mode_status ON navigation_sessions (travel_mode, status);
 -- (dest_place_id already indexed)
 
 -- R20: Daily aggregation
-CREATE INDEX idx_nav_started_date ON navigation_sessions (started_at::date, started_at);
+-- (started_at is TIMESTAMPTZ, so a started_at::date expression index is not allowed: the cast is not IMMUTABLE)
+CREATE INDEX idx_nav_started_date ON navigation_sessions (started_at);
 
 -- Additional index for general navigation queries
 CREATE INDEX idx_nav_status_time ON navigation_sessions (status, started_at);
@@ -206,8 +216,9 @@ CREATE INDEX idx_mv_place_stats_city_cat ON mv_place_stats (city_id, category_id
 -- =====================================================================
 
 \echo ''
-\echo 'Analyzing tables after index creation...'
-ANALYZE;
+\echo 'Vacuuming and analyzing tables after index creation...'
+-- VACUUM sets the visibility map, which index-only scans (R07, R11, R17, R18, R20) need.
+VACUUM (ANALYZE);
 
 -- =====================================================================
 -- INDEX SUMMARY
@@ -215,18 +226,17 @@ ANALYZE;
 
 \echo ''
 \echo '===== INDEX CREATION SUMMARY ====='
-SELECT 
+SELECT
     schemaname,
-    tablename, 
-    indexname, 
-    pg_size_pretty(pg_relation_size(indexname::regclass)) AS index_size,
+    relname AS tablename,
+    indexrelname AS indexname,
+    pg_size_pretty(pg_relation_size(indexrelid)) AS index_size,
     idx_scan AS times_used,
     idx_tup_read AS tuples_read,
     idx_tup_fetch AS tuples_fetched
-FROM pg_indexes
-JOIN pg_stat_user_indexes USING (schemaname, tablename, indexname)
+FROM pg_stat_user_indexes
 WHERE schemaname = 'gmaps'
-ORDER BY tablename, indexname;
+ORDER BY relname, indexrelname;
 
 \echo ''
 \echo '===== INDEXES CREATED SUCCESSFULLY ====='

@@ -1,0 +1,39 @@
+=== R13 run 1 ===
+Merge Anti Join  (cost=0.84..43274.76 rows=676863 width=25) (actual time=0.034..115.847 rows=666854 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=97379 read=20216 dirtied=2186 written=109
+  ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=25) (actual time=0.003..65.279 rows=800853 loops=1)
+        Buffers: shared hit=24557 read=19817 dirtied=2186 written=106
+  ->  Index Only Scan using idx_nav_origin_place on navigation_sessions n  (cost=0.42..4099.74 rows=3998830 width=4) (actual time=0.029..9.420 rows=148323 loops=1)
+        Heap Fetches: 1
+        Buffers: shared hit=72822 read=399 written=3
+Planning:
+  Buffers: shared hit=440 read=1
+Planning Time: 0.663 ms
+Execution Time: 127.559 ms
+=== R13 run 2 ===
+Merge Anti Join  (cost=0.84..43274.76 rows=676863 width=25) (actual time=0.032..113.230 rows=666854 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=76159 read=17475 written=1097
+  ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=25) (actual time=0.003..63.269 rows=800853 loops=1)
+        Buffers: shared hit=3337 read=17076 written=1071
+  ->  Index Only Scan using idx_nav_origin_place on navigation_sessions n  (cost=0.42..4099.74 rows=3998830 width=4) (actual time=0.028..8.784 rows=148323 loops=1)
+        Heap Fetches: 1
+        Buffers: shared hit=72822 read=399 written=26
+Planning:
+  Buffers: shared hit=440 read=1
+Planning Time: 0.639 ms
+Execution Time: 124.981 ms
+=== R13 run 3 ===
+Merge Anti Join  (cost=0.84..43274.76 rows=676863 width=25) (actual time=0.032..114.918 rows=666854 loops=1)
+  Merge Cond: (p.place_id = n.origin_place_id)
+  Buffers: shared hit=73402 read=20232 written=1074
+  ->  Index Scan using places_pkey on places p  (cost=0.42..39201.96 rows=801114 width=25) (actual time=0.003..64.967 rows=800853 loops=1)
+        Buffers: shared hit=580 read=19833 written=1059
+  ->  Index Only Scan using idx_nav_origin_place on navigation_sessions n  (cost=0.42..4099.74 rows=3998830 width=4) (actual time=0.028..9.204 rows=148323 loops=1)
+        Heap Fetches: 1
+        Buffers: shared hit=72822 read=399 written=15
+Planning:
+  Buffers: shared hit=440 read=1
+Planning Time: 0.655 ms
+Execution Time: 126.579 ms

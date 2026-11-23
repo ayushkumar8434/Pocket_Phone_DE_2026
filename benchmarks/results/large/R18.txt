@@ -1,0 +1,66 @@
+=== R18 run 1 ===
+Sort  (cost=68339.18..68339.19 rows=4 width=47) (actual time=129.209..130.262 rows=4 loops=1)
+  Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((status)::text = 'CANCELLED'::text)))::numeric) / (count(*))::numeric), 1)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=42 read=3435 dirtied=1
+  ->  Finalize GroupAggregate  (cost=1000.45..68339.14 rows=4 width=47) (actual time=129.198..130.251 rows=4 loops=1)
+        Group Key: travel_mode
+        Buffers: shared hit=39 read=3435 dirtied=1
+        ->  Gather Merge  (cost=1000.45..68338.99 rows=8 width=23) (actual time=129.069..130.244 rows=10 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=39 read=3435 dirtied=1
+              ->  Partial GroupAggregate  (cost=0.43..67338.05 rows=4 width=23) (actual time=42.872..99.462 rows=3 loops=3)
+                    Group Key: travel_mode
+                    Buffers: shared hit=39 read=3435 dirtied=1
+                    ->  Parallel Index Only Scan using idx_nav_mode_status on navigation_sessions  (cost=0.43..50676.22 rows=1666179 width=17) (actual time=0.038..41.847 rows=1333333 loops=3)
+                          Heap Fetches: 41
+                          Buffers: shared hit=39 read=3435 dirtied=1
+Planning:
+  Buffers: shared hit=232 read=1
+Planning Time: 0.416 ms
+Execution Time: 130.295 ms
+=== R18 run 2 ===
+Sort  (cost=68339.18..68339.19 rows=4 width=47) (actual time=136.013..137.017 rows=4 loops=1)
+  Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((status)::text = 'CANCELLED'::text)))::numeric) / (count(*))::numeric), 1)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=3475
+  ->  Finalize GroupAggregate  (cost=1000.45..68339.14 rows=4 width=47) (actual time=136.002..137.010 rows=4 loops=1)
+        Group Key: travel_mode
+        Buffers: shared hit=3472
+        ->  Gather Merge  (cost=1000.45..68338.99 rows=8 width=23) (actual time=135.897..137.000 rows=10 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=3472
+              ->  Partial GroupAggregate  (cost=0.43..67338.05 rows=4 width=23) (actual time=42.727..104.035 rows=3 loops=3)
+                    Group Key: travel_mode
+                    Buffers: shared hit=3472
+                    ->  Parallel Index Only Scan using idx_nav_mode_status on navigation_sessions  (cost=0.43..50676.22 rows=1666179 width=17) (actual time=0.022..42.888 rows=1333333 loops=3)
+                          Heap Fetches: 38
+                          Buffers: shared hit=3472
+Planning:
+  Buffers: shared hit=233
+Planning Time: 0.357 ms
+Execution Time: 137.047 ms
+=== R18 run 3 ===
+Sort  (cost=68339.18..68339.19 rows=4 width=47) (actual time=133.414..134.358 rows=4 loops=1)
+  Sort Key: (round(((100.0 * (count(*) FILTER (WHERE ((status)::text = 'CANCELLED'::text)))::numeric) / (count(*))::numeric), 1)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=3475
+  ->  Finalize GroupAggregate  (cost=1000.45..68339.14 rows=4 width=47) (actual time=133.401..134.348 rows=4 loops=1)
+        Group Key: travel_mode
+        Buffers: shared hit=3472
+        ->  Gather Merge  (cost=1000.45..68338.99 rows=8 width=23) (actual time=133.272..134.340 rows=10 loops=1)
+              Workers Planned: 2
+              Workers Launched: 2
+              Buffers: shared hit=3472
+              ->  Partial GroupAggregate  (cost=0.43..67338.05 rows=4 width=23) (actual time=43.076..102.394 rows=3 loops=3)
+                    Group Key: travel_mode
+                    Buffers: shared hit=3472
+                    ->  Parallel Index Only Scan using idx_nav_mode_status on navigation_sessions  (cost=0.43..50676.22 rows=1666179 width=17) (actual time=0.022..41.028 rows=1333333 loops=3)
+                          Heap Fetches: 38
+                          Buffers: shared hit=3472
+Planning:
+  Buffers: shared hit=233
+Planning Time: 0.391 ms
+Execution Time: 134.396 ms

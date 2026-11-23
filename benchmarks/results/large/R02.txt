@@ -1,0 +1,39 @@
+=== R02 run 1 ===
+Nested Loop Left Join  (cost=0.86..16.91 rows=1 width=95) (actual time=0.052..0.052 rows=1 loops=1)
+  Buffers: shared hit=1 read=7 dirtied=1
+  ->  Index Scan using places_pkey on places p  (cost=0.42..8.44 rows=1 width=79) (actual time=0.014..0.014 rows=1 loops=1)
+        Index Cond: (place_id = 18)
+        Buffers: shared hit=1 read=3 dirtied=1
+  ->  Index Scan using opening_hours_pkey on opening_hours h  (cost=0.43..8.45 rows=1 width=20) (actual time=0.036..0.036 rows=1 loops=1)
+        Index Cond: ((place_id = 18) AND (weekday = 2))
+        Buffers: shared read=4
+Planning:
+  Buffers: shared hit=323 read=8
+Planning Time: 0.473 ms
+Execution Time: 0.075 ms
+=== R02 run 2 ===
+Nested Loop Left Join  (cost=0.86..16.91 rows=1 width=95) (actual time=0.015..0.015 rows=1 loops=1)
+  Buffers: shared hit=8
+  ->  Index Scan using places_pkey on places p  (cost=0.42..8.44 rows=1 width=79) (actual time=0.008..0.008 rows=1 loops=1)
+        Index Cond: (place_id = 18)
+        Buffers: shared hit=4
+  ->  Index Scan using opening_hours_pkey on opening_hours h  (cost=0.43..8.45 rows=1 width=20) (actual time=0.006..0.006 rows=1 loops=1)
+        Index Cond: ((place_id = 18) AND (weekday = 2))
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=331
+Planning Time: 0.390 ms
+Execution Time: 0.037 ms
+=== R02 run 3 ===
+Nested Loop Left Join  (cost=0.86..16.91 rows=1 width=95) (actual time=0.012..0.013 rows=1 loops=1)
+  Buffers: shared hit=8
+  ->  Index Scan using places_pkey on places p  (cost=0.42..8.44 rows=1 width=79) (actual time=0.007..0.007 rows=1 loops=1)
+        Index Cond: (place_id = 18)
+        Buffers: shared hit=4
+  ->  Index Scan using opening_hours_pkey on opening_hours h  (cost=0.43..8.45 rows=1 width=20) (actual time=0.005..0.005 rows=1 loops=1)
+        Index Cond: ((place_id = 18) AND (weekday = 2))
+        Buffers: shared hit=4
+Planning:
+  Buffers: shared hit=331
+Planning Time: 0.376 ms
+Execution Time: 0.029 ms

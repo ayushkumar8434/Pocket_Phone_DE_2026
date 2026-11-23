@@ -7,7 +7,7 @@
 #          ./benchmarks/run_benchmark.sh capstone after 3 sql/06_optimized_queries.sql
 #
 # Connection settings come from the usual libpq variables (PGHOST, PGPORT, PGUSER).
-# Queries are split on "-- @R1" / "-- @W1" marker lines; "-- @END" stops collection.
+# Queries are split on "-- @R1" / "-- @W1" marker lines (an "_OPT" suffix, as in "-- @R01_OPT", is accepted); "-- @END" stops collection.
 #
 # WRITE queries (W*) run inside BEGIN ... ROLLBACK, so your data does not change.
 set -euo pipefail
@@ -25,7 +25,7 @@ echo "query_id,type,avg_ms,median_ms,min_ms,max_ms,scan_nodes" > "$SUMMARY"
 # Split the workload file on "-- @ID" markers into one temp file per query
 TMP="$(mktemp -d)"
 awk -v dir="$TMP" '
-  /^-- @/ { id = ""; if ($2 ~ /^@[RW][0-9]+$/) { id = substr($2, 2); file = dir "/" id ".sql"; printf "" > file }; next }
+  /^-- @/ { id = ""; if ($2 ~ /^@[RW][0-9]+(_OPT)?$/) { id = substr($2, 2); sub(/_OPT$/, "", id); file = dir "/" id ".sql"; printf "" > file }; next }
   id != "" && !/^--/ { print >> file }
 ' "$WORKLOAD"
 

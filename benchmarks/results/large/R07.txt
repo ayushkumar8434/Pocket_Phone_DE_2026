@@ -1,0 +1,78 @@
+=== R07 run 1 ===
+Sort  (cost=821.75..822.36 rows=242 width=48) (actual time=4.411..4.444 rows=800 loops=1)
+  Sort Key: s.segment_id
+  Sort Method: quicksort  Memory: 85kB
+  Buffers: shared hit=1587 read=882
+  ->  Nested Loop  (cost=46.72..812.17 rows=242 width=48) (actual time=0.081..4.335 rows=800 loops=1)
+        Buffers: shared hit=1584 read=882
+        ->  Bitmap Heap Scan on road_segments s  (cost=46.29..693.17 rows=242 width=29) (actual time=0.047..0.448 rows=800 loops=1)
+              Recheck Cond: (city_id = 1)
+              Filter: ((road_name)::text ~~ 'Outer Ring Road%'::text)
+              Rows Removed by Filter: 3200
+              Heap Blocks: exact=60
+              Buffers: shared read=65
+              ->  Bitmap Index Scan on idx_segments_city_road  (cost=0.00..46.23 rows=3992 width=0) (actual time=0.038..0.038 rows=4000 loops=1)
+                    Index Cond: (city_id = 1)
+                    Buffers: shared read=5
+        ->  Limit  (cost=0.43..0.48 rows=1 width=19) (actual time=0.005..0.005 rows=1 loops=800)
+              Buffers: shared hit=1584 read=817
+              ->  Index Only Scan using idx_traffic_segment_time on traffic_readings  (cost=0.43..6.64 rows=126 width=19) (actual time=0.005..0.005 rows=1 loops=800)
+                    Index Cond: (segment_id = s.segment_id)
+                    Heap Fetches: 0
+                    Buffers: shared hit=1584 read=817
+Planning:
+  Buffers: shared hit=224 read=10
+Planning Time: 0.544 ms
+Execution Time: 4.494 ms
+=== R07 run 2 ===
+Sort  (cost=821.75..822.36 rows=242 width=48) (actual time=4.161..4.194 rows=800 loops=1)
+  Sort Key: s.segment_id
+  Sort Method: quicksort  Memory: 85kB
+  Buffers: shared hit=2469
+  ->  Nested Loop  (cost=46.72..812.17 rows=242 width=48) (actual time=0.141..4.064 rows=800 loops=1)
+        Buffers: shared hit=2466
+        ->  Bitmap Heap Scan on road_segments s  (cost=46.29..693.17 rows=242 width=29) (actual time=0.091..0.484 rows=800 loops=1)
+              Recheck Cond: (city_id = 1)
+              Filter: ((road_name)::text ~~ 'Outer Ring Road%'::text)
+              Rows Removed by Filter: 3200
+              Heap Blocks: exact=60
+              Buffers: shared hit=65
+              ->  Bitmap Index Scan on idx_segments_city_road  (cost=0.00..46.23 rows=3992 width=0) (actual time=0.077..0.077 rows=4000 loops=1)
+                    Index Cond: (city_id = 1)
+                    Buffers: shared hit=5
+        ->  Limit  (cost=0.43..0.48 rows=1 width=19) (actual time=0.004..0.004 rows=1 loops=800)
+              Buffers: shared hit=2401
+              ->  Index Only Scan using idx_traffic_segment_time on traffic_readings  (cost=0.43..6.64 rows=126 width=19) (actual time=0.004..0.004 rows=1 loops=800)
+                    Index Cond: (segment_id = s.segment_id)
+                    Heap Fetches: 0
+                    Buffers: shared hit=2401
+Planning:
+  Buffers: shared hit=234
+Planning Time: 0.430 ms
+Execution Time: 4.257 ms
+=== R07 run 3 ===
+Sort  (cost=821.75..822.36 rows=242 width=48) (actual time=3.036..3.075 rows=800 loops=1)
+  Sort Key: s.segment_id
+  Sort Method: quicksort  Memory: 85kB
+  Buffers: shared hit=2469
+  ->  Nested Loop  (cost=46.72..812.17 rows=242 width=48) (actual time=0.065..2.972 rows=800 loops=1)
+        Buffers: shared hit=2466
+        ->  Bitmap Heap Scan on road_segments s  (cost=46.29..693.17 rows=242 width=29) (actual time=0.042..0.346 rows=800 loops=1)
+              Recheck Cond: (city_id = 1)
+              Filter: ((road_name)::text ~~ 'Outer Ring Road%'::text)
+              Rows Removed by Filter: 3200
+              Heap Blocks: exact=60
+              Buffers: shared hit=65
+              ->  Bitmap Index Scan on idx_segments_city_road  (cost=0.00..46.23 rows=3992 width=0) (actual time=0.035..0.035 rows=4000 loops=1)
+                    Index Cond: (city_id = 1)
+                    Buffers: shared hit=5
+        ->  Limit  (cost=0.43..0.48 rows=1 width=19) (actual time=0.003..0.003 rows=1 loops=800)
+              Buffers: shared hit=2401
+              ->  Index Only Scan using idx_traffic_segment_time on traffic_readings  (cost=0.43..6.64 rows=126 width=19) (actual time=0.003..0.003 rows=1 loops=800)
+                    Index Cond: (segment_id = s.segment_id)
+                    Heap Fetches: 0
+                    Buffers: shared hit=2401
+Planning:
+  Buffers: shared hit=234
+Planning Time: 0.381 ms
+Execution Time: 3.129 ms
